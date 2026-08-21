@@ -19,7 +19,14 @@ particuliers) basé à Meximieux (01).
   aucune base SEO exploitable.
 
 Voir aussi `NOTES.md` pour le détail du contenu collecté (ancien site + brief
-questionnaire fourni par Maxime pour l'ancien devis).
+questionnaire fourni par Maxime pour l'ancien devis) et `REVUE.md` pour les
+points en attente de validation par l'association.
+
+## État actuel
+
+Version 1 en ligne pour relecture : <https://avtplay.github.io/ceuc/>
+(GitHub Pages, branche `gh-pages`, indexation bloquée). Publication par
+`./deploy.sh`.
 
 ## Méthodologie de travail (agile très light)
 
