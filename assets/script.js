@@ -18,7 +18,7 @@
     // Sur mobile, le premier tap sur un parent ouvre le sous-menu au lieu de naviguer.
     nav.querySelectorAll(".nav__item--has-sub > a").forEach(function (link) {
       link.addEventListener("click", function (ev) {
-        if (window.matchMedia("(min-width: 1081px)").matches) return;
+        if (window.matchMedia("(min-width: 1201px)").matches) return;
         var item = link.parentElement;
         if (!item.classList.contains("is-open")) {
           ev.preventDefault();

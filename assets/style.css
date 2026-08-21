@@ -126,18 +126,19 @@ a:hover { color: var(--brand-600); }
   color: #fff; font-size: 1.2rem; font-weight: 800; letter-spacing: .06em;
 }
 .brand__text span {
-  color: var(--text-invert-muted); font-size: .68rem;
-  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--text-invert-muted); font-size: .64rem;
+  letter-spacing: .04em; text-transform: uppercase;
+  max-width: 29ch;
 }
 
-.nav { display: flex; align-items: center; gap: 1.6rem; }
+.nav { display: flex; align-items: center; gap: 1rem; }
 .nav__list { display: flex; align-items: center; gap: .25rem; list-style: none; margin: 0; padding: 0; }
 .nav__item { position: relative; }
 .nav__item > a {
   display: flex; align-items: center; gap: .3rem;
-  padding: .55rem .7rem; border-radius: 8px;
+  padding: .55rem .6rem; border-radius: 8px;
   color: var(--text-invert-muted); text-decoration: none;
-  font-size: .93rem; font-weight: 550; white-space: nowrap;
+  font-size: .89rem; font-weight: 550; white-space: nowrap;
   transition: color .15s, background-color .15s;
 }
 .nav__item > a:hover, .nav__item > a.is-active { color: #fff; background: rgba(255, 255, 255, .08); }
@@ -177,7 +178,7 @@ a:hover { color: var(--brand-600); }
 .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .burger { display: block; }
   .nav {
     position: fixed; inset: 72px 0 auto; z-index: 90;
@@ -388,7 +389,10 @@ a:hover { color: var(--brand-600); }
 /* --------------------------------------------------------------- Cartes -- */
 
 .grid { display: grid; gap: 1.35rem; }
-.grid--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+/* Deux colonnes strictes : en `auto-fit`, quatre cartes se répartissaient en
+   3 + 1, ce qui déséquilibre la page. */
+.grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 720px) { .grid--2 { grid-template-columns: 1fr; } }
 .grid--3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
 .card {
@@ -562,6 +566,37 @@ a.card:hover .card__more svg { transform: translateX(3px); }
 }
 .callout h2 { color: #fff; font-size: var(--step-2); margin-bottom: .35em; }
 .callout p { color: var(--text-invert-muted); max-width: 58ch; margin: 0; }
+
+/* --------------------------------------------------- Bande photo thème -- */
+
+/* Le nombre de colonnes suit le nombre de photos : avec `auto-fit`, deux
+   photos se retrouvaient tassées dans une grille prévue pour quatre. */
+.strip { display: grid; gap: 1.1rem; margin-top: 2rem; }
+.strip--1 { grid-template-columns: minmax(0, 620px); }
+.strip--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.strip--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 720px) {
+  .strip--2, .strip--3 { grid-template-columns: 1fr; }
+}
+.strip__title { grid-column: 1 / -1; margin: 0; font-size: var(--step-1); }
+.strip__item { margin: 0; }
+.strip__item .gal__link {
+  display: block; border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 3 / 2; background: var(--surface-muted); box-shadow: var(--shadow-sm);
+}
+.strip__item .gal__link img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+.strip__item .gal__link:hover img { transform: scale(1.04); }
+.strip__cap { margin-top: .5rem; font-size: .85rem; color: var(--text-muted); line-height: 1.45; }
+.section--dark .strip__cap { color: var(--text-invert-muted); }
+
+/* Emplacement encore vide : signale à l'association les photos attendues. */
+.strip__todo {
+  display: grid; place-content: center; gap: .35rem; text-align: center;
+  aspect-ratio: 3 / 2; padding: 1rem;
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  color: var(--text-muted); font-size: .85rem;
+}
+.section--dark .strip__todo { border-color: var(--border-dark); color: var(--text-invert-muted); }
 
 /* -------------------------------------------------------------- Galerie -- */
 
