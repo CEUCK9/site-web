@@ -11,8 +11,27 @@ import sys
 
 from PIL import Image
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.environ.get("CEUC_SRC", "")
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "img")
+OUT = os.path.join(ROOT, "assets", "img")
+
+# Photos fournies par l'association (2025-2026), versionnées dans le dépôt :
+# ce sont elles qui remplacent progressivement les visuels de l'ancien site.
+PHOTOS_2026_DIR = os.path.join(ROOT, "assets", "photos-2026")
+
+PHOTOS_2026 = {
+    # Accueil — bandeau large, on garde le cadrage d'origine.
+    "page_acceuil.jpg":        ("hero-rassemblement",       1400, None),
+    # Le centre — photo d'équipe.
+    "centre.jpg":              ("equipe-ceuc",               900, (4, 3)),
+    # Stage de perfectionnement.
+    "perfectionnement_1.jpg":  ("perfectionnement-01",       900, (3, 2)),
+    "perfectionnement_2.jpg":  ("perfectionnement-02",       900, (3, 2)),
+    # Olfaction / recherche de personnes.
+    "recherche_personne.jpg":  ("recherche-personne",        900, (3, 2)),
+    # Secourisme SST — portrait, on conserve un cadrage vertical doux.
+    "secourisme.jpg":          ("secourisme-sst",            800, (4, 5)),
+}
 
 # Chaque entrée : fichier source -> (nom de sortie, largeur max, ratio de recadrage ou None)
 PHOTOS = {
@@ -120,6 +139,13 @@ def main():
 
     make_logo(SRC)
 
+    for src, (name, max_w, ratio) in PHOTOS_2026.items():
+        p = os.path.join(PHOTOS_2026_DIR, src)
+        if not os.path.exists(p):
+            print(f"  MANQUANT (2026) {src}")
+            continue
+        print(f"  {name} {process(p, name, max_w, ratio)}")
+
     for src, (name, max_w, ratio) in PHOTOS.items():
         p = os.path.join(ib, src)
         if not os.path.exists(p):
@@ -129,7 +155,8 @@ def main():
 
     for i, item in enumerate(GALERIE, 1):
         src = item["src"]
-        p = os.path.join(ib, src)
+        base = PHOTOS_2026_DIR if item.get("recent") else ib
+        p = os.path.join(base, src)
         if not os.path.exists(p):
             print(f"  MANQUANT galerie {src}")
             continue

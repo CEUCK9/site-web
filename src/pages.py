@@ -7,7 +7,7 @@ et le référencement (mots-clés, structure de titres, maillage interne).
 
 from components import (
     bullets, callout, cards, faq, faq_jsonld, feature_rows, gallery, hero,
-    legal_note, modules, page_header, picture, section, stats, team,
+    legal_note, modules, page_header, photo_strip, picture, section, stats, team,
 )
 from template import BASE_URL, ORG, e
 
@@ -54,14 +54,6 @@ FORMATIONS_CARDS = [
         "url": "/formations/capture-chien-dangereux/",
         "image": "capture-chien",
         "alt": "Technicien de capture manipulant un chien errant avec le matériel adapté",
-        "tag": "Collectivités",
-    },
-    {
-        "titre": "Séminaires, audits &amp; création de brigade",
-        "texte": "Accompagnement des collectivités dans la création d'une brigade canine conforme au cadre légal et à la réalité opérationnelle.",
-        "url": "/formations/seminaires-audits/",
-        "image": "seminaires-audits",
-        "alt": "Rassemblement cynotechnique inter-administrations organisé par le CEUC",
         "tag": "Collectivités",
     },
     {
@@ -123,10 +115,10 @@ page(
                 "Municipale, services de secours, sécurité publique et privée. "
                 "<strong>Encadré uniquement par des policiers municipaux en exercice.</strong>"
             ),
-            image="hero-mordant",
+            image="hero-rassemblement",
             image_alt=(
-                "Exercice de mordant encadré par le CEUC avec des cynotechniciens de "
-                "Police Municipale"
+                "Rassemblement de cynotechniciens de Police Municipale lors d'une "
+                "session de formation au CEUC"
             ),
             primary=("Découvrir les formations", "/formations/"),
             secondary=("Nous contacter", "/contact/"),
@@ -139,9 +131,8 @@ page(
         + section(
             cls="section--tight section--stats",
             content=stats([
-                ("15+", "années d'instruction cynophile"),
-                ("6", "domaines de formation"),
-                ("100 %", "formateurs policiers municipaux"),
+                ("100 %", "formateurs policiers municipaux en activité"),
+                ("5", "formations professionnelles"),
                 ("France & étranger", "zone d'intervention"),
             ]),
         )
@@ -213,9 +204,16 @@ page(
             title="Chiens, cinéma et prestations annexes",
             content=cards([
                 {
-                    "titre": "Sélection &amp; fourniture de chiens",
+                    "titre": "Création de brigade canine &amp; audits",
+                    "texte": "Accompagnement des collectivités qui montent une unité cynophile de Police Municipale, et audit des brigades déjà en service.",
+                    "url": "/creation-brigade-canine/",
+                    "image": "seminaires-audits",
+                    "alt": "Rassemblement cynotechnique inter-administrations organisé par le CEUC",
+                },
+                {
+                    "titre": "Vente de chiens",
                     "texte": "Chiens testés et validés par un vétérinaire, formés à l'intervention ou à l'olfaction, pour les institutions publiques et privées.",
-                    "url": "/chiens/",
+                    "url": "/vente-chiens/",
                     "image": "selection-chiens",
                     "alt": "Jeune chien de travail sélectionné par le CEUC",
                 },
@@ -318,7 +316,10 @@ page(
                 "issus de l'administration et de grandes unités opérationnelles afin "
                 "d'apporter une plus-value réelle aux stagiaires."
             ),
-            content=team(MEMBRES),
+            content=team(MEMBRES)
+            + photo_strip(
+                [("equipe-ceuc", "L'équipe du CEUC sur le terrain d'entraînement de Meximieux")],
+            ),
         )
         + section(
             id="structures",
@@ -421,19 +422,21 @@ page(
             ),
         )
         + section(
-            title="Nos six domaines de formation",
+            title="Nos domaines de formation",
             intro=(
                 "Formations destinées aux professionnels et aux collectivités, ainsi qu'aux "
-                "particuliers pour le permis de détention."
+                "particuliers pour le permis de détention. Pour la création ou l'audit "
+                "d'une brigade canine, voir la rubrique "
+                "<a href='/creation-brigade-canine/'>Brigade canine</a>."
             ),
             content=cards(FORMATIONS_CARDS + [
                 {
                     "titre": "Secourisme SST",
-                    "texte": "Formation de Sauveteur Secouriste du Travail, initiale et recyclage, destinée aux professionnels de la sécurité publique et privée.",
+                    "texte": "Sauveteur Secouriste du Travail, initiale et recyclage. Unité de formation en cours de mise en place : demandez un devis.",
                     "url": "/formations/sst-secourisme/",
-                    "image": "secourisme-intervention",
-                    "alt": "Mise en situation de secourisme opérationnel",
-                    "tag": "Professionnels",
+                    "image": "secourisme-sst",
+                    "alt": "Prise en charge d'une victime lors d'un exercice de secourisme opérationnel",
+                    "tag": "Sur devis",
                 },
             ]),
         )
@@ -461,7 +464,7 @@ page(
 # ==========================================================================
 
 def formation_page(*, slug, title, description, eyebrow, h1, lead, image, image_alt,
-                   body, course, faq_items=None):
+                   body, course, faq_items=None, callout_block=None):
     from template import _course_jsonld  # import local : évite un cycle à l'import
     extra = [_course_jsonld(course, "/" + slug)]
     faq_block = ""
@@ -482,11 +485,11 @@ def formation_page(*, slug, title, description, eyebrow, h1, lead, image, image_
                         image=image, image_alt=image_alt)
             + body
             + faq_block
-            + callout(
+            + (callout_block if callout_block is not None else callout(
                 title="Intéressé par cette formation&nbsp;?",
                 text="Contactez le centre pour connaître les prochaines sessions, les modalités et les possibilités de prise en charge.",
                 cta_label="Demander un renseignement",
-            )
+            ))
         ),
     )
 
@@ -669,7 +672,13 @@ formation_page(
                 "forte expérience</strong> dans la formation et l'encadrement "
                 "cynotechnique.</p>"
                 "<p><a href='/le-centre/'>Découvrir l'équipe du centre →</a></p>"
-            ),
+            )
+            + photo_strip([
+                ("perfectionnement-01",
+                 "Mise en situation d'intervention en extérieur lors d'un stage de perfectionnement"),
+                ("perfectionnement-02",
+                 "Exercice d'interpellation avec appui du chien pendant un stage"),
+            ], title="En images"),
         )
     ),
 )
@@ -724,9 +733,16 @@ formation_page(
                 },
                 {
                     "titre": "Fourniture de chiens créancés",
-                    "texte": "Sur demande, nous fournissons également des chiens formés dans toutes les spécialités olfactives. <a href=\"/chiens/\">Voir la sélection →</a>",
+                    "texte": "Sur demande, nous fournissons également des chiens formés dans toutes les spécialités olfactives. <a href=\"/vente-chiens/\">Voir la sélection →</a>",
                 },
             ], cols=3),
+        )
+        + section(
+            content=photo_strip([
+                ("recherche-personne",
+                 "Chien de recherche de personne au travail sur longe, en milieu naturel"),
+            ], title="En images"),
+            cls="section--tight",
         )
         + section(
             cls="section--dark section--tight",
@@ -825,31 +841,137 @@ formation_page(
 
 
 formation_page(
-    slug="formations/seminaires-audits/",
-    title="Séminaires, audits et création de brigade canine | CEUC",
+    slug="formations/sst-secourisme/",
+    title="Formation SST et recyclage — sur devis | CEUC",
     description=(
-        "Créer une brigade canine conforme au cadre légal : audits, séminaires à thèmes "
-        "et démonstrations, en France et à l'international."
+        "Formation Sauveteur Secouriste du Travail et recyclage pour les professionnels "
+        "de la sécurité. Unité en cours de mise en place : demandez votre devis."
     ),
-    eyebrow="Séminaires & audits",
-    h1="Création de brigade canine, audits et séminaires",
+    eyebrow="Secourisme SST",
+    h1="Formation SST et recyclage",
     lead=(
-        "Toute notre expérience et notre technicité au service de la collectivité, pour "
-        "obtenir une brigade canine qui respecte le cadre légal et reste en adéquation avec "
-        "la réalité opérationnelle."
+        "Sauveteur Secouriste du Travail, formation initiale et recyclage, pour les "
+        "professionnels de la sécurité publique et privée ainsi que les utilisateurs de "
+        "chiens de service."
     ),
-    image="seminaires-audits",
-    image_alt="Rassemblement cynotechnique inter-administrations organisé par le CEUC",
+    image="secourisme-sst",
+    image_alt="Prise en charge d'une victime lors d'un exercice de secourisme opérationnel",
     course={
-        "nom": "Séminaires, audits et accompagnement à la création de brigade canine",
+        "nom": "Formation SST — Sauveteur Secouriste du Travail et recyclage",
         "description": (
-            "Colloques, démonstrations et audits au sein des institutions publiques et "
-            "privées, avec étude spécifique en concordance avec la demande. Déplacement "
-            "toutes distances, France et international."
+            "Formation Sauveteur Secouriste du Travail, initiale et recyclage, destinée "
+            "aux professionnels de la sécurité publique et privée. Sur devis."
         ),
     },
     body=(
         section(
+            title="Deux formats",
+            content=modules([
+                {
+                    "numero": "01",
+                    "titre": "Formation initiale",
+                    "duree": None,
+                    "html": (
+                        "<p>Gestes de premiers secours et rôle du sauveteur secouriste dans "
+                        "le cadre professionnel, avec une approche adaptée aux contraintes "
+                        "des métiers de la sécurité.</p>"
+                    ),
+                },
+                {
+                    "numero": "02",
+                    "titre": "Recyclage",
+                    "duree": None,
+                    "html": (
+                        "<p>Maintien et actualisation des compétences, avec révision des "
+                        "gestes et mises en situation.</p>"
+                    ),
+                },
+            ]),
+        )
+        + section(
+            cls="section--dark",
+            title="Où en est cette formation",
+            content=(
+                "<p><strong>L'unité de formation SST du centre est en cours de mise en "
+                "place.</strong> Le CEUC n'est pas encore en mesure de délivrer le "
+                "certificat : nous préférons l'annoncer clairement plutôt que de laisser "
+                "planer un doute.</p>"
+                "<p>Vous pouvez d'ores et déjà <strong>demander un devis</strong> et vous "
+                "positionner sur les premières sessions. Nous vous recontactons dès "
+                "l'ouverture officielle.</p>"
+            ),
+        )
+    ),
+    callout_block=callout(
+        title="Demandez votre devis SST",
+        text=(
+            "Indiquez-nous le nombre d'agents à former et le format souhaité "
+            "(initiale ou recyclage) : nous vous adressons une proposition chiffrée."
+        ),
+        cta_label="Demander un devis",
+    ),
+)
+
+
+# ==========================================================================
+# BRIGADE CANINE (rubrique autonome, hors « Formations »)
+# ==========================================================================
+
+from template import _course_jsonld  # noqa: E402
+
+BRIGADE_FAQ = [
+    (
+        "Par où commencer pour créer une brigade canine ?",
+        "<p>Par un échange sur votre contexte : effectif de la Police Municipale, "
+        "missions visées, moyens matériels et budget. Nous vous indiquons ensuite les "
+        "étapes réglementaires, le profil de chien adapté et le parcours de formation "
+        "de l'agent.</p>",
+    ),
+    (
+        "Peut-on auditer une brigade canine déjà en service ?",
+        "<p>Oui. L'audit porte sur les pratiques, le matériel, les procédures et la "
+        "conformité au cadre légal, et se conclut par des préconisations concrètes.</p>",
+    ),
+    (
+        "Intervenez-vous en dehors du département de l'Ain ?",
+        "<p>Oui, sur l'ensemble du territoire national et à l'international. "
+        "Déplacement toutes distances.</p>",
+    ),
+]
+
+page(
+    slug="creation-brigade-canine/",
+    title="Création de brigade canine de Police Municipale & audit | CEUC",
+    description=(
+        "Créer une brigade canine de Police Municipale conforme au cadre légal, auditer "
+        "une unité existante, organiser un séminaire à thèmes."
+    ),
+    breadcrumb=[("Brigade canine", "/creation-brigade-canine/")],
+    og_image="/assets/img/seminaires-audits.jpg",
+    extra_jsonld=[
+        _course_jsonld({
+            "nom": "Création de brigade canine de Police Municipale et audit",
+            "description": (
+                "Accompagnement des collectivités dans la création d'une unité cynophile "
+                "de Police Municipale, audit de brigade existante, séminaires à thèmes, "
+                "colloques et démonstrations."
+            ),
+        }, "/creation-brigade-canine/"),
+        faq_jsonld(BRIGADE_FAQ),
+    ],
+    body=(
+        page_header(
+            eyebrow="Brigade canine",
+            title="Création de brigade canine de Police Municipale et audit",
+            lead=(
+                "Toute notre expérience et notre technicité au service de la collectivité, "
+                "pour obtenir une brigade canine qui respecte le cadre légal et reste en "
+                "adéquation avec la réalité opérationnelle."
+            ),
+            image="seminaires-audits",
+            image_alt="Rassemblement cynotechnique inter-administrations organisé par le CEUC",
+        )
+        + section(
             title="Nos interventions",
             content=cards([
                 {
@@ -873,64 +995,32 @@ formation_page(
         + section(
             cls="section--dark section--tight",
             content=(
-                "<p class='big-quote'>Le CEUC organise des séminaires sur l'ensemble du "
-                "territoire national mais aussi à l'international, au bénéfice des "
-                "institutions publiques et privées — forces de l'ordre, services de sécurité, "
-                "services de secours. <strong>Déplacement toutes distances.</strong></p>"
+                "<p class='big-quote'>Le CEUC intervient sur l'ensemble du territoire "
+                "national mais aussi à l'international, au bénéfice des institutions "
+                "publiques et privées — forces de l'ordre, services de sécurité, services "
+                "de secours. <strong>Déplacement toutes distances.</strong></p>"
             ),
         )
-    ),
-)
-
-
-formation_page(
-    slug="formations/sst-secourisme/",
-    title="Formation SST — Sauveteur Secouriste du Travail | CEUC",
-    description=(
-        "Formation SST initiale et recyclage destinée aux professionnels de la sécurité "
-        "publique et privée, dispensée par le centre d'entraînement des unités cynophiles."
-    ),
-    eyebrow="Secourisme SST",
-    h1="Formation SST — Sauveteur Secouriste du Travail",
-    lead=(
-        "Formation initiale et recyclage, destinée aux professionnels de la sécurité publique "
-        "et privée ainsi qu'aux utilisateurs de chiens de service."
-    ),
-    image="secourisme-intervention",
-    image_alt="Mise en situation de secourisme opérationnel lors d'une formation CEUC",
-    course={
-        "nom": "Formation SST — Sauveteur Secouriste du Travail",
-        "description": (
-            "Formation Sauveteur Secouriste du Travail, initiale et recyclage, destinée aux "
-            "professionnels de la sécurité publique et privée."
-        ),
-    },
-    body=section(
-        title="Deux formats",
-        content=modules([
-            {
-                "numero": "01",
-                "titre": "Formation initiale",
-                "duree": None,
-                "html": (
-                    "<p>Acquisition des gestes de premiers secours et du rôle de sauveteur "
-                    "secouriste dans le cadre professionnel, avec une approche adaptée aux "
-                    "contraintes des métiers de la sécurité.</p>"
-                ),
-            },
-            {
-                "numero": "02",
-                "titre": "Recyclage",
-                "duree": None,
-                "html": (
-                    "<p>Maintien et actualisation des compétences, avec révision des gestes "
-                    "et mises en situation.</p>"
-                ),
-            },
-        ])
-        + "<p class='accent-line'>Cette formation est encadrée par un formateur secourisme "
-          "opérationnel du centre. <a href='/contact/'>Contactez-nous</a> pour connaître les "
-          "prochaines sessions.</p>",
+        + section(
+            title="Et ensuite ?",
+            content=(
+                "<p>Une fois la brigade créée, le centre assure la suite du parcours : "
+                "<a href='/formations/police-municipale/'>formation du cynotechnicien</a>, "
+                "<a href='/vente-chiens/'>sélection du chien de service</a> et "
+                "<a href='/formations/perfectionnement/'>maintien opérationnel du "
+                "binôme</a>.</p>"
+            ),
+        )
+        + section(cls="section--muted", title="Questions fréquentes",
+                  content=faq(BRIGADE_FAQ))
+        + callout(
+            title="Un projet de brigade canine dans votre commune&nbsp;?",
+            text=(
+                "Présentez-nous votre contexte et vos contraintes : nous étudions la "
+                "faisabilité et construisons l'accompagnement correspondant."
+            ),
+            cta_label="Parler de votre projet",
+        )
     ),
 )
 
@@ -1035,18 +1125,18 @@ page(
 # ==========================================================================
 
 page(
-    slug="chiens/",
-    title="Sélection et fourniture de chiens de travail | CEUC",
+    slug="vente-chiens/",
+    title="Vente de chiens de travail pour police et sécurité | CEUC",
     description=(
-        "Chiens formés à l'intervention et à l'olfaction pour les institutions publiques "
-        "et privées, et accompagnement à l'acquisition d'un chiot utilitaire."
+        "Vente de chiens formés à l'intervention et à l'olfaction pour les institutions "
+        "publiques et privées, et accompagnement à l'acquisition d'un chiot utilitaire."
     ),
-    breadcrumb=[("Chiens", "/chiens/")],
+    breadcrumb=[("Vente de chiens", "/vente-chiens/")],
     og_image="/assets/img/selection-chiens.jpg",
     body=(
         page_header(
-            eyebrow="Chiens",
-            title="Sélection et fourniture de chiens de travail",
+            eyebrow="Vente de chiens",
+            title="Vente et sélection de chiens de travail",
             lead=(
                 "Une sélection rigoureuse et adaptée à chaque demande des administrations : "
                 "chien testé à plusieurs reprises et validé par un vétérinaire."
@@ -1317,8 +1407,8 @@ page(
     </div>
     <div class="contact__block contact__block--map">
       <h2>Nous situer</h2>
-      <p>Le terrain d'entraînement se trouve chemin du Mortaray, à Meximieux, dans l'Ain
-      (01), à proximité immédiate de l'A42 et de la ligne Lyon&nbsp;– Ambérieu.</p>
+      <p>Le terrain d'entraînement et le bureau se trouvent chemin du Mortaray, à
+      Meximieux, dans l'Ain (01).</p>
       <div class="map-placeholder" role="img"
            aria-label="Emplacement du centre : chemin du Mortaray, 01800 Meximieux">
         <strong>{ORG['ville']} ({ORG['code_postal']})</strong>

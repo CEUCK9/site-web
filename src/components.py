@@ -178,6 +178,25 @@ def team(members):
     return f'<div class="team">{"".join(out)}</div>'
 
 
+def photo_strip(items, *, title=None):
+    """Bande de 2 ou 3 photos illustrant un thème.
+
+    items : liste de (nom de fichier sans extension, légende).
+    Les photos sont cliquables et rejoignent la visionneuse de la galerie.
+    """
+    figs = []
+    for name, legende in items:
+        figs.append(
+            f'<figure class="strip__item">'
+            f'<a href="/assets/img/{name}.jpg" class="gal__link" '
+            f'aria-label="Agrandir : {e(legende)}">'
+            f'{picture(name, legende, cls="strip__pic")}</a>'
+            f'<figcaption class="strip__cap">{e(legende)}</figcaption></figure>'
+        )
+    head = f'<h3 class="strip__title">{title}</h3>' if title else ""
+    return f'<div class="strip strip--{len(items)}">{head}{"".join(figs)}</div>'
+
+
 def gallery(items):
     """items : liste de (index, légende)"""
     out = []

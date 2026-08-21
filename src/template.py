@@ -23,11 +23,11 @@ BASE_URL = os.environ.get("CEUC_BASE_URL", PROD_URL).rstrip("/")
 BASE_PATH = os.environ.get("CEUC_BASE_PATH", "").rstrip("/")
 STAGING = os.environ.get("CEUC_STAGING") == "1"
 
-SITE_NAME = "CEUC — Centre d'Entraînement Unités Cynophiles"
+SITE_NAME = "CEUC — Centre d'Entraînement des Unités Cynophiles"
 SITE_SHORT = "CEUC"
 
 ORG = {
-    "nom": "Centre d'Entraînement Unités Cynophiles",
+    "nom": "Centre d'Entraînement des Unités Cynophiles",
     "sigle": "CEUC",
     "adresse": "Chemin du Mortaray",
     "code_postal": "01800",
@@ -57,14 +57,13 @@ NAV = [
         ("Stage de perfectionnement", "/formations/perfectionnement/"),
         ("Olfaction & recherche", "/formations/olfaction-detection/"),
         ("Capture de chiens dangereux", "/formations/capture-chien-dangereux/"),
-        ("Séminaires, audits & création de brigade", "/formations/seminaires-audits/"),
         ("Secourisme SST", "/formations/sst-secourisme/"),
     ]),
+    ("Brigade canine", "/creation-brigade-canine/", []),
     ("Particuliers", "/particuliers/permis-chien-categorise/", []),
-    ("Chiens", "/chiens/", []),
+    ("Vente de chiens", "/vente-chiens/", []),
     ("Cinéma", "/cinema/", []),
     ("Galerie", "/galerie/", []),
-    ("Contact", "/contact/", []),
 ]
 
 
@@ -198,7 +197,7 @@ HEADER_TPL = """<a class="skip" href="#contenu">Aller au contenu</a>
       <img src="/assets/img/logo-180.png" width="52" height="52" alt="" class="brand__logo">
       <span class="brand__text">
         <strong>CEUC</strong>
-        <span>Centre d'Entraînement Unités Cynophiles</span>
+        <span>Centre d'Entraînement des Unités Cynophiles</span>
       </span>
     </a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="nav-principal"
@@ -233,8 +232,7 @@ FOOTER_TPL = """<footer class="site-footer">
         <li><a href="/formations/perfectionnement/">Stage de perfectionnement</a></li>
         <li><a href="/formations/olfaction-detection/">Olfaction &amp; recherche</a></li>
         <li><a href="/formations/capture-chien-dangereux/">Capture de chiens dangereux</a></li>
-        <li><a href="/formations/seminaires-audits/">Séminaires &amp; audits</a></li>
-        <li><a href="/formations/sst-secourisme/">Secourisme SST</a></li>
+                <li><a href="/formations/sst-secourisme/">Secourisme SST</a></li>
       </ul>
     </div>
     <div>
@@ -242,7 +240,8 @@ FOOTER_TPL = """<footer class="site-footer">
       <ul class="site-footer__list">
         <li><a href="/le-centre/">Présentation &amp; équipe</a></li>
         <li><a href="/particuliers/permis-chien-categorise/">Permis chien catégorisé</a></li>
-        <li><a href="/chiens/">Sélection de chiens</a></li>
+        <li><a href="/vente-chiens/">Vente de chiens</a></li>
+        <li><a href="/creation-brigade-canine/">Création de brigade canine</a></li>
         <li><a href="/cinema/">Cinéma &amp; tournages</a></li>
         <li><a href="/prestations/">Prestations annexes</a></li>
         <li><a href="/galerie/">Galerie photos</a></li>

@@ -43,7 +43,9 @@ SITEMAP_HINTS = {
     "": (1.0, "monthly"),
     "formations/": (0.9, "monthly"),
     "formations/police-municipale/": (0.9, "monthly"),
+    "creation-brigade-canine/": (0.9, "monthly"),
     "particuliers/permis-chien-categorise/": (0.9, "monthly"),
+    "vente-chiens/": (0.8, "monthly"),
     "contact/": (0.8, "yearly"),
     "mentions-legales/": (0.2, "yearly"),
 }
@@ -153,14 +155,14 @@ def build_redirects():
         "/capture_chiens_errants-dangereux.html": "/formations/capture-chien-dangereux/",
         "/stage_capture.html": "/formations/capture-chien-dangereux/",
         "/stage_capture-1.html": "/formations/capture-chien-dangereux/",
-        "/seminaires_-_audits.html": "/formations/seminaires-audits/",
+        "/seminaires_-_audits.html": "/creation-brigade-canine/",
         "/secourisme_operationnel_et_canin.html": "/formations/sst-secourisme/",
         "/conduite_operationnelle.html": "/formations/",
         "/stage_formateur.html": "/formations/",
         "/formation_chiens_dangereux.html": "/particuliers/permis-chien-categorise/",
         "/partenariat_education_canine.html": "/particuliers/permis-chien-categorise/",
-        "/selection_chiens.html": "/chiens/",
-        "/vente_-_achats.html": "/chiens/",
+        "/selection_chiens.html": "/vente-chiens/",
+        "/vente_-_achats.html": "/vente-chiens/",
         "/tournage_-_cinema.html": "/cinema/",
         "/cinema.html": "/cinema/",
         "/cinema-1.html": "/cinema/",
@@ -176,6 +178,10 @@ def build_redirects():
         "/facebook.html": "/contact/",
         "/contact.html": "/contact/",
         "/imsitemap.html": "/",
+        # URL de la première version de relecture, renommées après retour de
+        # l'association : évite de casser les liens déjà partagés.
+        "/chiens/": "/vente-chiens/",
+        "/formations/seminaires-audits/": "/creation-brigade-canine/",
     }
     lines = [f"{old}  {new}  301" for old, new in mapping.items()]
     write("_redirects", "\n".join(lines) + "\n")
