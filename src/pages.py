@@ -432,7 +432,7 @@ page(
             content=cards(FORMATIONS_CARDS + [
                 {
                     "titre": "Secourisme SST",
-                    "texte": "Sauveteur Secouriste du Travail, initiale et recyclage. Unité de formation en cours de mise en place : demandez un devis.",
+                    "texte": "Sauveteur Secouriste du Travail, formation initiale et recyclage pour les professionnels de la sécurité. Sur devis.",
                     "url": "/formations/sst-secourisme/",
                     "image": "secourisme-sst",
                     "alt": "Prise en charge d'une victime lors d'un exercice de secourisme opérationnel",
@@ -845,7 +845,7 @@ formation_page(
     title="Formation SST et recyclage — sur devis | CEUC",
     description=(
         "Formation Sauveteur Secouriste du Travail et recyclage pour les professionnels "
-        "de la sécurité. Unité en cours de mise en place : demandez votre devis."
+        "de la sécurité publique et privée. Demandez votre devis au CEUC."
     ),
     eyebrow="Secourisme SST",
     h1="Formation SST et recyclage",
@@ -860,7 +860,7 @@ formation_page(
         "nom": "Formation SST — Sauveteur Secouriste du Travail et recyclage",
         "description": (
             "Formation Sauveteur Secouriste du Travail, initiale et recyclage, destinée "
-            "aux professionnels de la sécurité publique et privée. Sur devis."
+            "aux professionnels de la sécurité publique et privée, sur devis."
         ),
     },
     body=(
@@ -887,19 +887,6 @@ formation_page(
                     ),
                 },
             ]),
-        )
-        + section(
-            cls="section--dark",
-            title="Où en est cette formation",
-            content=(
-                "<p><strong>L'unité de formation SST du centre est en cours de mise en "
-                "place.</strong> Le CEUC n'est pas encore en mesure de délivrer le "
-                "certificat : nous préférons l'annoncer clairement plutôt que de laisser "
-                "planer un doute.</p>"
-                "<p>Vous pouvez d'ores et déjà <strong>demander un devis</strong> et vous "
-                "positionner sur les premières sessions. Nous vous recontactons dès "
-                "l'ouverture officielle.</p>"
-            ),
         )
     ),
     callout_block=callout(
