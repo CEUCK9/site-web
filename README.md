@@ -44,3 +44,20 @@ dist/               site généré (non versionné)
 
 Voir `CLAUDE.md` pour la méthodologie de travail avec l'association et
 `NOTES.md` pour le détail du contenu collecté.
+
+## Déploiement de la version de relecture
+
+Le site de relecture est publié sur GitHub Pages depuis la branche `gh-pages` :
+
+```bash
+./deploy.sh
+```
+
+Le script regénère `dist/` en mode relecture (indexation bloquée, sous-chemin
+`/ceuc`), lance `check.py` et pousse le résultat.
+
+Une alternative existe sous forme d'action GitHub
+(`.github/workflows-disponibles/deploy.yml.exemple`) : elle reconstruit et
+publie automatiquement à chaque push. Pour l'activer, déplacer le fichier dans
+`.github/workflows/deploy.yml` — cela nécessite un jeton disposant du scope
+`workflow` (`gh auth refresh -s workflow`).
