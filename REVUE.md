@@ -1,64 +1,73 @@
-# Points à valider avec Maxime — version 1
+# Suivi des retours de l'association
 
 Version en ligne : <https://avtplay.github.io/ceuc/>
 (hébergement temporaire, indexation bloquée le temps de la relecture)
 
-## À vérifier en priorité
+## Version 2 — retours du 21/08/2026
 
-### Contenu factuel
-- [ ] **Équipe** — le brief ne cite plus que Anthony, David et Maxime. L'ancien
-      site mentionnait aussi **Stéphan et Olivier** (hommes d'attaque). Sont-ils
-      toujours dans la structure ?
-- [ ] **Chiens vendus** — les trois fiches reprises sont celles de l'ancien site
-      et sont toutes marquées « VENDU ». À remplacer par des placements récents,
-      ou à retirer si l'association préfère.
-- [ ] **Chiffres de la page d'accueil** — « 15+ années d'instruction » est une
-      estimation à partir des références citées (court-métrage 2009, SIRET).
-      À confirmer ou corriger.
-- [ ] **Formation SST** — présente dans le brief mais sans détail (durée,
-      tarif, public). La page est volontairement courte en attendant.
-- [ ] **Conduite opérationnelle** — annoncée « très prochainement » depuis
-      des années sur l'ancien site et absente du brief : page supprimée.
-      Confirmer l'abandon.
-- [ ] **Liens réseaux sociaux** — les URL Facebook et Instagram ont été
-      déduites des noms de comptes (« ceuc cyno », « ceuc_k9 »). À vérifier.
+### Traité
 
-### Droit à l'image
-- [ ] Sur les photos de l'ancien site, les visages sont **floutés sur les
-      séances Police mais pas sur les stages de capture**. Seules les photos
-      floutées ont été retenues, et une photo de démonstration a été recadrée
-      pour écarter le public. À confirmer que la diffusion est couverte par des
-      autorisations.
+- [x] **En-tête** — « Centre d'Entraînement **des** Unités Cynophiles »
+- [x] **« Chiens » → « Vente de chiens »** — nouvelle adresse `/vente-chiens/`
+- [x] **Brigade canine sortie de l'onglet Formations** — rubrique autonome
+      `/creation-brigade-canine/`, avec son propre menu
+- [x] **SST** — la page n'annonce plus la délivrance du certificat. Elle
+      indique que l'unité est en cours de mise en place et propose un devis.
+- [x] **Photos 2025-2026** — accueil, équipe, perfectionnement (×2),
+      recherche de personne, secourisme
+- [x] **Galerie** — les six photos récentes passent en tête, les visuels les
+      plus faibles de l'ancien site sont retirés
+- [x] **Correctifs de contenu** — retrait de deux affirmations qui ne
+      venaient d'aucune source : « 15+ années d'instruction » et la mention
+      de l'A42 / ligne Lyon–Ambérieu sur la page Contact
 
-### Éléments manquants
-- [ ] **Photos en haute définition** — celles de l'ancien site plafonnent à
-      800 px de large. Le site est prêt à recevoir mieux : il suffit de fournir
-      les originaux.
-- [ ] **Nom de domaine** — quel domaine l'association réserve-t-elle ? Le code
-      pointe provisoirement vers `ceuc-k9.fr`.
-- [ ] **Tarifs** — aucun tarif n'est affiché. Souhaité ou non ?
-- [ ] **Formulaire de contact** — la page n'affiche que téléphone et e-mail.
-      Un formulaire est possible, mais demande un service d'envoi côté serveur
-      (à prévoir sur le VPS).
+### En attente de photos
 
-## Ce qui a changé par rapport à l'ancien site
+Maxime souhaite **2 à 3 photos par thème**. Fournies pour le perfectionnement
+seulement ; il en manque pour :
 
-| Avant | Maintenant |
-|---|---|
-| ~32 pages, dont une majorité vides | 16 pages, toutes remplies |
-| Menu à 3 niveaux | Menu à 2 niveaux, 7 entrées |
-| Illisible sur téléphone | Conçu mobile d'abord |
-| Accents cassés (ISO-8859-1) | UTF-8 |
-| Aucune base de référencement | Titres et descriptions uniques, données structurées, sitemap |
-| Galeries cassées ou vides | Galerie unique avec visionneuse |
-| Partenaire K9 Métier Passion | Kraken Tactical (selon le brief) |
-| Facebook seul | Facebook + Instagram |
+- [ ] Formation cynotechnicien de Police Municipale
+- [ ] Olfaction & recherche *(1 photo sur 2-3)*
+- [ ] Capture de chiens errants et dangereux
+- [ ] Création de brigade canine & audit
+- [ ] Permis de détention chien catégorisé
+- [ ] Vente de chiens
+- [ ] Cinéma & tournages
+- [ ] Prestations annexes
+- [ ] Le centre / structures *(1 photo sur 2-3)*
 
-## Référencement — reste à faire une fois le domaine choisi
+### Questions encore ouvertes
 
-- [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux) —
-      c'est le levier le plus rentable pour les recherches locales.
-- [ ] Soumettre le sitemap à la **Google Search Console**.
-- [ ] Mettre en place les **redirections 301** depuis les anciennes URL
-      `ceuc.free.fr` (le fichier `_redirects` généré liste les 35 règles).
-- [ ] Retirer `CEUC_STAGING` pour autoriser l'indexation du site définitif.
+- [ ] **Nom de domaine** — `ceuc.fr` et `ceuc-k9.fr` sont **tous les deux
+      libres** (vérifié auprès de l'AFNIC le 21/08/2026). `ceuc.fr` est plus
+      court et plus mémorisable ; `ceuc-k9.fr` porte le « K9 » déjà présent
+      sur le logo et les réseaux. Recommandation : réserver les deux et faire
+      pointer l'un vers l'autre — un `.fr` coûte une dizaine d'euros par an.
+- [ ] **SST** — publier ou non la date d'ouverture (« début novembre ») ?
+      Elle n'est volontairement pas affichée pour ne pas engager le centre
+      sur un calendrier qui peut glisser.
+- [ ] **Droit à l'image** — les photos 2026 ont les visages floutés, ce qui
+      est rassurant. Reste à confirmer que la diffusion est bien couverte.
+- [ ] **Équipe** — Stéphan et Olivier font-ils toujours partie de la
+      structure ? (l'ancien site les citait, le brief non)
+- [ ] **Fiches chiens** — les trois annonces sont toutes en « VENDU » et
+      datent de l'ancien site. À rafraîchir ou à retirer.
+- [ ] **Réseaux sociaux** — les adresses Facebook et Instagram ont été
+      déduites des noms de comptes, à vérifier.
+- [ ] **Contenu rédigé par défaut** — certaines sections ont été écrites
+      faute de matière (FAQ, « comment nous travaillons avec les
+      productions », descriptifs des spécialités olfactives). À relire et
+      corriger par l'association.
+
+## Après validation du contenu
+
+- [ ] **Choisir la solution d'édition** — le site est aujourd'hui statique :
+      Maxime ne peut pas le modifier lui-même. Deux pistes à trancher :
+      WordPress sur le VPS, ou conserver ce site et y brancher un CMS léger
+      (Decap, Sveltia) qui donne une interface d'édition web.
+- [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
+- [ ] Soumettre le sitemap à la **Google Search Console**
+- [ ] Activer les **redirections 301** depuis `ceuc.free.fr` — le fichier
+      `_redirects` généré contient les 37 règles (GitHub Pages les ignore,
+      elles fonctionneront sur le VPS ou sur Netlify)
+- [ ] Retirer `CEUC_STAGING` pour autoriser l'indexation du site définitif
