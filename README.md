@@ -59,7 +59,7 @@ les cas :
 
 | Réglage | Rôle |
 |---|---|
-| `GH_USER` | compte ou organisation propriétaire du dépôt (à changer après le transfert) |
+| `GH_USER` | organisation propriétaire du dépôt (`CEUCK9`) |
 | `DOMAINE` | nom de domaine définitif ; laissé vide tant qu'on est sur `github.io` |
 | `STAGING` | `1` version de relecture non indexable · `0` site public |
 

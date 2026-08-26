@@ -1,6 +1,6 @@
 # Suivi des retours de l'association
 
-Version en ligne : <https://avtplay.github.io/ceuc/>
+Version en ligne : <https://ceuck9.github.io/site-web/>
 (hébergement temporaire, indexation bloquée le temps de la relecture)
 
 ## Comment on travaille avec l'association
@@ -88,8 +88,9 @@ seulement ; il en manque pour :
 - [x] **Solution d'édition arrêtée** — pas de CMS. Maxime modifiera le site
       lui-même via l'application Claude connectée au dépôt GitHub. Le mode
       d'emploi destiné à ces sessions est dans `CLAUDE.md`.
-- [ ] **Transférer le dépôt** dans l'organisation GitHub de l'association
-      (Maxime crée le compte et l'organisation, ajoute Alexandre en Owner)
+- [x] **Dépôt en place** — `CEUCK9/site-web`, public (obligatoire pour
+      GitHub Pages sur un plan gratuit). Site de relecture :
+      <https://ceuck9.github.io/site-web/>
 - [ ] **Activer la publication automatique** — déplacer
       `.github/workflows-disponibles/deploy.yml.exemple` vers
       `.github/workflows/deploy.yml` et régler Settings → Pages sur

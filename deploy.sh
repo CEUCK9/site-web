@@ -14,11 +14,11 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-# --- À ajuster après le transfert du dépôt dans l'organisation ---------------
-# Compte ou organisation GitHub propriétaire du dépôt.
-GH_USER="${CEUC_GH_USER:-avtplay}"
+# --- Réglages ---------------------------------------------------------------
+# Organisation GitHub propriétaire du dépôt (celle de l'association).
+GH_USER="${CEUC_GH_USER:-CEUCK9}"
 # Nom du dépôt (sert de sous-chemin sur GitHub Pages).
-REPO="${CEUC_REPO:-ceuc}"
+REPO="${CEUC_REPO:-site-web}"
 # Nom de domaine définitif, une fois réservé et branché (ex. "ceuc.fr").
 # Laisser vide tant que le site tourne sur l'adresse github.io.
 DOMAINE="${CEUC_DOMAINE:-}"
@@ -32,9 +32,12 @@ if [ -n "$DOMAINE" ]; then
   export CEUC_BASE_PATH=""
   URL_PUBLIQUE="https://$DOMAINE/"
 else
-  export CEUC_BASE_URL="https://$GH_USER.github.io"
+  # Le sous-domaine github.io est toujours en minuscules : on normalise pour
+  # que les URL canoniques et le sitemap soient cohérents.
+  GH_HOST="$(printf '%s' "$GH_USER" | tr '[:upper:]' '[:lower:]').github.io"
+  export CEUC_BASE_URL="https://$GH_HOST"
   export CEUC_BASE_PATH="/$REPO"
-  URL_PUBLIQUE="https://$GH_USER.github.io/$REPO/"
+  URL_PUBLIQUE="https://$GH_HOST/$REPO/"
 fi
 export CEUC_STAGING="$STAGING"
 
