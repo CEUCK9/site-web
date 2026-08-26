@@ -1,18 +1,50 @@
 #!/usr/bin/env bash
-# Publie la version de relecture sur GitHub Pages (branche gh-pages).
+# Publie le site sur GitHub Pages (branche gh-pages).
 #
-# Le site est construit en mode « staging » : servi depuis /ceuc et interdit
-# à l'indexation, pour ne pas concurrencer le futur site sur son vrai domaine.
+# Deux modes, pilotés par les variables ci-dessous :
+#
+#   * Relecture (par défaut) — le site est servi depuis un sous-chemin
+#     GitHub Pages et interdit à l'indexation, pour ne pas concurrencer le
+#     futur site sur son vrai domaine.
+#
+#   * Production — dès qu'un nom de domaine est branché sur le dépôt :
+#     mettre GH_USER/REPO à jour n'est plus nécessaire, il suffit de
+#     renseigner DOMAINE et de passer STAGING à 0.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
-export CEUC_BASE_URL="https://avtplay.github.io"
-export CEUC_BASE_PATH="/ceuc"
-export CEUC_STAGING="1"
+# --- À ajuster après le transfert du dépôt dans l'organisation ---------------
+# Compte ou organisation GitHub propriétaire du dépôt.
+GH_USER="${CEUC_GH_USER:-avtplay}"
+# Nom du dépôt (sert de sous-chemin sur GitHub Pages).
+REPO="${CEUC_REPO:-ceuc}"
+# Nom de domaine définitif, une fois réservé et branché (ex. "ceuc.fr").
+# Laisser vide tant que le site tourne sur l'adresse github.io.
+DOMAINE="${CEUC_DOMAINE:-}"
+# 1 = version de relecture (non indexable) · 0 = site public définitif.
+STAGING="${CEUC_STAGING:-1}"
+# ----------------------------------------------------------------------------
+
+if [ -n "$DOMAINE" ]; then
+  # Avec un domaine propre, le site est servi à la racine : pas de sous-chemin.
+  export CEUC_BASE_URL="https://$DOMAINE"
+  export CEUC_BASE_PATH=""
+  URL_PUBLIQUE="https://$DOMAINE/"
+else
+  export CEUC_BASE_URL="https://$GH_USER.github.io"
+  export CEUC_BASE_PATH="/$REPO"
+  URL_PUBLIQUE="https://$GH_USER.github.io/$REPO/"
+fi
+export CEUC_STAGING="$STAGING"
 
 python3 build.py
 python3 check.py
+
+# GitHub Pages a besoin du fichier CNAME pour servir le domaine personnalisé.
+if [ -n "$DOMAINE" ]; then
+  echo "$DOMAINE" > dist/CNAME
+fi
 
 WORKTREE="$(mktemp -d)"
 trap 'git worktree remove --force "$WORKTREE" 2>/dev/null || true; rm -rf "$WORKTREE"' EXIT
@@ -31,8 +63,12 @@ if git -C "$WORKTREE" diff --cached --quiet; then
   echo "Aucun changement à publier."
   exit 0
 fi
-git -C "$WORKTREE" commit -q -m "Version de relecture — $(date '+%d/%m/%Y %H:%M')"
+git -C "$WORKTREE" commit -q -m "Publication — $(date '+%d/%m/%Y %H:%M')"
 git -C "$WORKTREE" push -q origin gh-pages
 
 echo
-echo "Publié : https://avtplay.github.io/ceuc/"
+if [ "$STAGING" = "1" ]; then
+  echo "Publié (version de relecture, non indexable) : $URL_PUBLIQUE"
+else
+  echo "Publié (site public, indexable) : $URL_PUBLIQUE"
+fi

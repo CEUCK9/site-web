@@ -53,8 +53,18 @@ Le site de relecture est publié sur GitHub Pages depuis la branche `gh-pages` :
 ./deploy.sh
 ```
 
-Le script regénère `dist/` en mode relecture (indexation bloquée, sous-chemin
-`/ceuc`), lance `check.py` et pousse le résultat.
+Le script regénère `dist/`, lance `check.py` et pousse le résultat sur la
+branche `gh-pages`. Trois réglages en tête de fichier suffisent à couvrir tous
+les cas :
+
+| Réglage | Rôle |
+|---|---|
+| `GH_USER` | compte ou organisation propriétaire du dépôt (à changer après le transfert) |
+| `DOMAINE` | nom de domaine définitif ; laissé vide tant qu'on est sur `github.io` |
+| `STAGING` | `1` version de relecture non indexable · `0` site public |
+
+Renseigner `DOMAINE` bascule automatiquement le site à la racine et écrit le
+fichier `CNAME` attendu par GitHub Pages.
 
 Une alternative existe sous forme d'action GitHub
 (`.github/workflows-disponibles/deploy.yml.exemple`) : elle reconstruit et
