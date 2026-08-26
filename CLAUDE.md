@@ -1,54 +1,170 @@
-# CEUC — Refonte du site web
+# Site du CEUC — instructions de travail
 
-## Contexte du projet
+## Le projet en deux lignes
 
-Refonte du site de l'association **CEUC (Centre d'Entraînement Unités Cynophiles)**,
-centre de formation en cynotechnie professionnelle (Police Municipale, sécurité,
-particuliers) basé à Meximieux (01).
+Site du **CEUC (Centre d'Entraînement des Unités Cynophiles)**, association de
+Meximieux (01) qui forme les maîtres-chiens de la Police Municipale et des
+services de secours. Site statique généré par des scripts Python : on modifie
+des fichiers source, une action GitHub reconstruit et publie automatiquement.
 
-- Ancien site (très daté) : http://ceuc.free.fr/
-- Contact association : Maxime (responsable)
-- Raison de la refonte : le site actuel n'est plus du tout référencé, et un devis
-  pro avait été obtenu mais jugé trop cher — Maxime n'a pas donné suite.
-- Contrainte budget : à moindre frais. Hébergement cible : **VPS OVH + nom de
-  domaine** (déjà prévus/possédés par l'association).
-- Édition du contenu : doit pouvoir être faite par **un membre non-technique**
-  de l'association (Maxime) une fois le site en place → privilégier un CMS
-  simple plutôt qu'un site 100% statique.
-- Référencement (SEO) : exigence explicite de Maxime, le vieux site n'a
-  aucune base SEO exploitable.
+## Avec qui tu travailles
 
-Voir aussi `NOTES.md` pour le détail du contenu collecté (ancien site + brief
-questionnaire fourni par Maxime pour l'ancien devis) et `REVUE.md` pour les
-points en attente de validation par l'association.
+Ton interlocuteur est **Maxime**, responsable de l'association. Il est
+policier municipal et formateur cynotechnique, **il n'est pas développeur**.
 
-## État actuel
+En conséquence :
 
-Version 1 en ligne pour relecture : <https://avtplay.github.io/ceuc/>
-(GitHub Pages, branche `gh-pages`, indexation bloquée). Publication par
-`./deploy.sh`.
+- Écris-lui en français courant, sans vocabulaire technique. Il ne sait pas ce
+  qu'est un commit, un slug ou une balise meta — et il n'a pas à le savoir.
+- Ne lui demande jamais de choisir entre deux options techniques. Choisis, et
+  explique en une phrase ce que ça change **pour les visiteurs de son site**.
+- Quand tu as terminé, dis-lui simplement quelle page a changé et quoi, puis
+  qu'il verra le résultat en ligne dans une à deux minutes.
+- S'il demande quelque chose d'irréalisable en l'état (un formulaire de
+  contact, une boutique, un espace adhérents), dis-le franchement et propose
+  la version simple qui répond au besoin.
 
-## Méthodologie de travail (agile très light)
+## Règle absolue : ne rien inventer
 
-On travaille en boucle courte avec l'association, sans validation lourde en
-amont :
+C'est le point le plus important de ce fichier.
 
-1. **Maxime fournit les infos** (contenu, photos, retours, corrections).
-2. **On produit une version** du site à partir de ces infos.
-3. **On l'héberge sur un hébergement gratuit temporaire** (pas le VPS OVH
-   définitif) pour qu'il puisse la voir en ligne facilement pendant les
-   itérations.
-4. **Maxime relit** la version en ligne.
-5. **Il renvoie ses retours et modifications.**
-6. On boucle sur les étapes 2 à 5 jusqu'à validation.
+Ce site engage une association qui vend des formations à des mairies et à des
+administrations. **Une information inexacte sur ce site est un problème réel
+pour eux**, pas une imprécision de rédaction.
 
-Le passage sur le VPS OVH définitif + nom de domaine ne se fait qu'une fois
-le contenu/la structure stabilisés avec Maxime — pas dès la première version.
+Tu ne dois donc **jamais** produire, de toi-même :
 
-Implications pratiques :
-- Pas de gros documents de specs ou de maquettes figées à valider avant de
-  coder : on avance par itérations visibles et rapides.
-- Prioriser la rapidité de mise en ligne d'une version testable plutôt que la
-  perfection dès le premier jet.
-- Documenter les décisions prises à chaque retour de Maxime plutôt que de
-  tout garder en mémoire de conversation (voir NOTES.md).
+- un chiffre : années d'existence, nombre de stagiaires, de formations, de
+  chiens placés, durée d'un module, effectif ;
+- un tarif, un prix, une remise ;
+- une date : ouverture d'une session, création de l'association, calendrier ;
+- une référence légale : loi, décret, article de code ;
+- un diplôme, une habilitation, une certification, un agrément ;
+- un nom : formateur, partenaire, élevage, commune, production, client ;
+- une description de la façon dont l'association travaille, si personne ne te
+  l'a décrite.
+
+Quand l'information manque, **demande-la à Maxime**. Une phrase de moins sur
+le site vaut mieux qu'une phrase inventée.
+
+Cette règle a déjà servi : la première version du site affichait « 15+ années
+d'instruction cynophile » et situait le terrain « à proximité immédiate de
+l'A42 » — deux affirmations qui ne venaient d'aucune source et qu'il a fallu
+retirer.
+
+Le fait de reformuler pour le web est autorisé et souhaitable. Inventer un
+fait ne l'est pas.
+
+## Où se trouve quoi
+
+| Ce que Maxime veut changer | Fichier à modifier |
+|---|---|
+| Un texte, un titre, une question fréquente | `src/pages.py` |
+| Une photo de la galerie, sa légende | `src/gallery_data.py` |
+| Ajouter une nouvelle photo au site | `assets/photos-2026/` + `src/images.py` |
+| Coordonnées, e-mail, téléphone, réseaux sociaux | `src/template.py` (bloc `ORG`) |
+| Les entrées du menu | `src/template.py` (bloc `NAV`) |
+| Les couleurs, les espacements, la mise en page | `src/style.css` |
+
+`src/pages.py` contient tout le contenu, page par page, dans l'ordre du menu.
+Chaque page y est déclarée avec son titre, sa description pour Google et son
+corps. C'est le fichier que tu modifieras le plus souvent.
+
+**Ne touche pas** à `build.py`, `check.py`, `src/template.py` (hors `ORG` et
+`NAV`) ni `src/components.py` sans raison précise : ce sont les rouages, pas
+le contenu.
+
+## Comment faire les modifications courantes
+
+### Changer un texte
+
+Cherche la phrase dans `src/pages.py` et modifie-la. Attention : le contenu
+est écrit en HTML dans des chaînes Python. Conserve les balises `<p>`,
+`<strong>`, `<em>` telles quelles, ainsi que les guillemets qui entourent le
+texte.
+
+### Ajouter une photo
+
+1. Dépose le fichier dans `assets/photos-2026/`, avec un nom explicite en
+   minuscules sans accent (`capture_chien_1.jpg`).
+2. Déclare-le dans `PHOTOS_2026` au début de `src/images.py`, en indiquant le
+   nom de sortie, la largeur maximale et le format de recadrage.
+3. Utilise-le dans `src/pages.py`, via `photo_strip([...])` pour illustrer un
+   thème, ou dans une carte existante.
+
+Pour l'ajouter à la galerie, déclare-le plutôt dans `src/gallery_data.py` avec
+`"recent": True`.
+
+**Toute photo doit avoir une légende descriptive.** Elle sert de texte
+alternatif : c'est ce que lisent Google et les personnes malvoyantes. Décris
+ce qu'on voit (« Chien de recherche au travail sur longe »), pas le fichier.
+
+**Vérifie les visages.** Les photos de l'association sont normalement
+floutées. Si une photo montre des personnes identifiables — en particulier
+des stagiaires, des passants ou des enfants — signale-le à Maxime avant de la
+publier plutôt que de la mettre en ligne.
+
+### Ajouter une question fréquente
+
+Les questions fréquentes sont regroupées en listes nommées `..._FAQ` dans
+`src/pages.py`. Ajoute un couple question / réponse à la liste : le bloc
+visible sur la page **et** les données lues par Google se mettent à jour
+ensemble, il n'y a rien d'autre à faire.
+
+### Créer une page
+
+Copie la structure d'une page existante et ajoute-la à `NAV` dans
+`src/template.py`. Chaque page a besoin d'un titre et d'une description
+**uniques** — `check.py` refuse les doublons.
+
+## Vérifier avant de publier
+
+Si tu peux exécuter des commandes :
+
+```bash
+python3 build.py && python3 check.py
+```
+
+`check.py` contrôle les liens internes, les titres et descriptions en double
+ou trop longs, la hiérarchie des titres, les textes alternatifs des images et
+les données structurées. **Il doit finir sans erreur.**
+
+Si tu ne peux pas exécuter de commandes, ce n'est pas bloquant : la même
+vérification tourne automatiquement à la publication, et **un site cassé n'est
+jamais mis en ligne**. En revanche, préviens Maxime que le résultat sera
+visible après le contrôle automatique.
+
+## Comment le site est publié
+
+Toute modification enregistrée sur la branche `main` déclenche la
+reconstruction et la mise en ligne, en une à deux minutes. Il n'y a rien à
+lancer manuellement.
+
+L'adresse actuelle est temporaire, et le site est **volontairement invisible
+sur Google** le temps de la relecture. Ce n'est pas un défaut de
+référencement : c'est pour éviter que cette version concurrence le site
+définitif. Si Maxime s'étonne de ne pas se trouver sur Google, c'est
+l'explication.
+
+## Le référencement
+
+C'est la raison d'être de la refonte : l'ancien site n'était plus trouvé.
+Chaque page a donc un titre et une description propres, des données
+structurées et un maillage entre les pages. Quelques réflexes à conserver :
+
+- Un titre de page fait au maximum **65 caractères**, une description entre
+  **70 et 165**. `check.py` le vérifie.
+- Une seule idée par page. Mieux vaut une page dédiée à « capture de chien
+  errant » qu'un paragraphe noyé ailleurs.
+- Emploie les mots que les gens tapent : « formation maître-chien police
+  municipale », « permis chien catégorisé », plutôt que le jargon interne.
+- Cite la ville et le département quand c'est naturel : une bonne partie des
+  recherches sont locales.
+
+## Suivi
+
+`REVUE.md` liste ce qui a été traité, les photos encore attendues et les
+questions en suspens. Tiens-le à jour quand un point est réglé.
+
+`NOTES.md` conserve le détail du contenu d'origine, pour retrouver la source
+d'une information.

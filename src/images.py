@@ -129,15 +129,19 @@ def make_logo(src_dir):
 
 
 def main():
-    if not SRC or not os.path.isdir(SRC):
-        sys.exit(
-            "Définir CEUC_SRC vers le dossier contenant ib/ et images/ "
-            "(photos récupérées sur l'ancien site)."
-        )
+    # Les photos de l'ancien site ne sont pas versionnées : sans CEUC_SRC on
+    # traite uniquement celles fournies par l'association. C'est ce qui permet
+    # d'ajouter une photo depuis GitHub sans rien installer sur sa machine —
+    # les visuels déjà générés restent en place, ils sont dans le dépôt.
     os.makedirs(OUT, exist_ok=True)
-    ib = os.path.join(SRC, "ib")
+    ancien_site = bool(SRC) and os.path.isdir(SRC)
+    ib = os.path.join(SRC, "ib") if ancien_site else ""
 
-    make_logo(SRC)
+    if ancien_site:
+        make_logo(SRC)
+    else:
+        print("CEUC_SRC absent : seules les photos de assets/photos-2026 "
+              "sont régénérées.")
 
     for src, (name, max_w, ratio) in PHOTOS_2026.items():
         p = os.path.join(PHOTOS_2026_DIR, src)
@@ -146,15 +150,18 @@ def main():
             continue
         print(f"  {name} {process(p, name, max_w, ratio)}")
 
-    for src, (name, max_w, ratio) in PHOTOS.items():
-        p = os.path.join(ib, src)
-        if not os.path.exists(p):
-            print(f"  MANQUANT {src}")
-            continue
-        print(f"  {name} {process(p, name, max_w, ratio)}")
+    if ancien_site:
+        for src, (name, max_w, ratio) in PHOTOS.items():
+            p = os.path.join(ib, src)
+            if not os.path.exists(p):
+                print(f"  MANQUANT {src}")
+                continue
+            print(f"  {name} {process(p, name, max_w, ratio)}")
 
     for i, item in enumerate(GALERIE, 1):
         src = item["src"]
+        if not item.get("recent") and not ancien_site:
+            continue  # visuel de l'ancien site : déjà généré et versionné
         base = PHOTOS_2026_DIR if item.get("recent") else ib
         p = os.path.join(base, src)
         if not os.path.exists(p):

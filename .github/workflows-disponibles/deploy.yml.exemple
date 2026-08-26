@@ -1,8 +1,28 @@
-name: Déploiement GitHub Pages
+name: Publication du site
 
-# Version de relecture pour l'association : reconstruite à chaque push sur main.
-# L'indexation est bloquée (CEUC_STAGING) pour qu'elle ne concurrence pas le
-# futur site sur le domaine définitif.
+# ---------------------------------------------------------------------------
+# À ACTIVER APRÈS LE TRANSFERT DU DÉPÔT DANS L'ORGANISATION DE L'ASSOCIATION
+#
+#   1. Déplacer ce fichier vers .github/workflows/deploy.yml
+#      (le pousser demande un jeton disposant du droit « workflow » :
+#       gh auth refresh -s workflow)
+#   2. Dans Settings → Pages, choisir la source « GitHub Actions »
+#
+# Ensuite, chaque modification poussée sur `main` reconstruit et republie le
+# site automatiquement. C'est ce qui permet à l'association de modifier son
+# contenu depuis l'application Claude sans rien lancer à la main.
+#
+# Deux garde-fous :
+#   * check.py s'exécute avant la publication. S'il trouve un lien mort ou une
+#     balise SEO en double, le déploiement échoue et le site en ligne reste
+#     tel quel — une erreur ne peut pas casser le site public.
+#   * L'adresse du site est lue depuis la configuration GitHub Pages : elle
+#     s'adapte d'elle-même au transfert du dépôt, puis au nom de domaine.
+#
+# Passage en production : créer une variable de dépôt CEUC_STAGING valant 0
+# (Settings → Secrets and variables → Actions → Variables). Tant qu'elle vaut
+# 1, le site reste interdit à l'indexation par Google.
+# ---------------------------------------------------------------------------
 
 on:
   push:
@@ -28,19 +48,33 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Installer Pillow (traitement des photos)
+        run: pip install --quiet Pillow
+
+      - name: Configurer GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Préparer les photos
+        # Sans CEUC_SRC, seules les photos de assets/photos-2026 sont
+        # régénérées : il suffit donc de déposer une photo dans ce dossier et
+        # de la déclarer dans src/images.py pour qu'elle arrive sur le site.
+        run: python3 src/images.py
+
       - name: Générer le site
         env:
-          CEUC_BASE_URL: https://avtplay.github.io
-          CEUC_BASE_PATH: /ceuc
-          CEUC_STAGING: "1"
+          # Renseignées automatiquement par configure-pages : après le
+          # transfert du dépôt, puis après la mise en place du nom de domaine,
+          # ces valeurs suivent sans qu'on touche au fichier.
+          CEUC_BASE_URL: ${{ steps.pages.outputs.origin }}
+          CEUC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          CEUC_STAGING: ${{ vars.CEUC_STAGING || '1' }}
         run: python3 build.py
 
-      - name: Contrôler liens et SEO
+      - name: Contrôler liens, SEO et structure
         env:
-          CEUC_BASE_PATH: /ceuc
+          CEUC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: python3 check.py
-
-      - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:

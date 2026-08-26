@@ -3,6 +3,30 @@
 Version en ligne : <https://avtplay.github.io/ceuc/>
 (hébergement temporaire, indexation bloquée le temps de la relecture)
 
+## Comment on travaille avec l'association
+
+Boucle courte, sans validation lourde en amont :
+
+1. Maxime fournit les infos (contenu, photos, retours).
+2. On produit une version.
+3. Elle est publiée automatiquement sur l'adresse de relecture.
+4. Maxime relit en ligne.
+5. Il renvoie ses corrections.
+6. On reboucle sur 2-5 jusqu'à validation.
+
+Le passage sur le nom de domaine définitif n'intervient qu'une fois le
+contenu stabilisé.
+
+## Hébergement
+
+Décision arrêtée : **GitHub Pages**, gratuit. Le site est entièrement
+statique, aucun serveur PHP n'est nécessaire, et l'adresse e-mail
+professionnelle viendra avec le nom de domaine. Budget total : environ
+10 € la première année pour les deux noms de domaine, puis ~16 €/an.
+
+Le dépôt doit être transféré dans une organisation GitHub appartenant à
+l'association, pour qu'elle ne dépende pas d'un compte personnel.
+
 ## Version 2 — retours du 21/08/2026
 
 ### Traité
@@ -61,10 +85,16 @@ seulement ; il en manque pour :
 
 ## Après validation du contenu
 
-- [ ] **Choisir la solution d'édition** — le site est aujourd'hui statique :
-      Maxime ne peut pas le modifier lui-même. Deux pistes à trancher :
-      WordPress sur le VPS, ou conserver ce site et y brancher un CMS léger
-      (Decap, Sveltia) qui donne une interface d'édition web.
+- [x] **Solution d'édition arrêtée** — pas de CMS. Maxime modifiera le site
+      lui-même via l'application Claude connectée au dépôt GitHub. Le mode
+      d'emploi destiné à ces sessions est dans `CLAUDE.md`.
+- [ ] **Transférer le dépôt** dans l'organisation GitHub de l'association
+      (Maxime crée le compte et l'organisation, ajoute Alexandre en Owner)
+- [ ] **Activer la publication automatique** — déplacer
+      `.github/workflows-disponibles/deploy.yml.exemple` vers
+      `.github/workflows/deploy.yml` et régler Settings → Pages sur
+      « GitHub Actions ». Sans cela Maxime modifiera des fichiers sans que
+      le site ne change, ce qui le découragera vite.
 - [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
 - [ ] Soumettre le sitemap à la **Google Search Console**
 - [ ] Activer les **redirections 301** depuis `ceuc.free.fr` — le fichier
