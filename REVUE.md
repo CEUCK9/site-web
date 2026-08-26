@@ -1,7 +1,7 @@
 # Suivi des retours de l'association
 
-Version en ligne : <https://ceuck9.github.io/site-web/>
-(hébergement temporaire, indexation bloquée le temps de la relecture)
+Site en ligne : <https://ceuc.fr> — hébergement OVH, **indexable depuis le 26/08/2026**.
+Préversion (jamais indexée) : <https://ceuck9.github.io/site-web/>
 
 ## Comment on travaille avec l'association
 
@@ -91,11 +91,19 @@ seulement ; il en manque pour :
 - [x] **Dépôt en place** — `CEUCK9/site-web`, public (obligatoire pour
       GitHub Pages sur un plan gratuit). Site de relecture :
       <https://ceuck9.github.io/site-web/>
-- [ ] **Activer la publication automatique** — déplacer
-      `.github/workflows-disponibles/deploy.yml.exemple` vers
-      `.github/workflows/deploy.yml` et régler Settings → Pages sur
-      « GitHub Actions ». Sans cela Maxime modifiera des fichiers sans que
-      le site ne change, ce qui le découragera vite.
+- [x] **Publication automatique active** — chaque modification poussée sur
+      `main` reconstruit le site et l'envoie sur ceuc.fr en ~90 s, après
+      contrôle par `check.py`.
+- [ ] **Changer le mot de passe SFTP** — il a transité par une conversation,
+      puis mettre à jour le secret `CEUC_SFTP_PASS`.
+
+## Maintenant que le site est indexable
+
+- [ ] Soumettre le sitemap à la **Google Search Console**
+- [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
+- [ ] Faire relire par Maxime le contenu rédigé faute de matière : FAQ,
+      « comment nous travaillons avec les productions », descriptifs des
+      spécialités olfactives, page SST. Ce texte est désormais public.
 - [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
 - [ ] Soumettre le sitemap à la **Google Search Console**
 - [ ] Activer les **redirections 301** depuis `ceuc.free.fr` — le fichier
