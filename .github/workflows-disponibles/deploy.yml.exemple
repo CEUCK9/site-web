@@ -7,26 +7,26 @@ name: Publication du site
 #      (le pousser demande un jeton avec le droit « workflow » :
 #       gh auth refresh -s workflow)
 #
-#   2. Renseigner les identifiants FTP de l'hébergement OVH dans
-#      Settings → Secrets and variables → Actions → Secrets :
+#   2. Renseigner les identifiants de l'hébergement OVH dans
+#      Settings → Secrets and variables → Actions → onglet Secrets :
 #
-#        FTP_SERVER    ex. ftp.cluster0XX.hosting.ovh.net
-#        FTP_USERNAME  identifiant FTP de l'hébergement
-#        FTP_PASSWORD  mot de passe associé
+#        CEUC_SFTP_HOST   ftp.cluster121.hosting.ovh.net
+#        CEUC_SFTP_USER   identifiant de l'hébergement
+#        CEUC_SFTP_PASS   mot de passe
 #
-#      Ces trois valeurs se trouvent dans l'espace client OVH, rubrique
-#      Hébergements → FTP-SSH. Une fois enregistrées comme secrets, elles
-#      ne sont plus lisibles, y compris par les administrateurs.
+#      Les trois vont bien en Secrets et non en Variables : GitHub masque
+#      les secrets dans les journaux d'exécution, qui sont publics puisque
+#      le dépôt l'est.
 #
-#   3. Facultatif, dans Variables (et non Secrets) :
-#        FTP_DOSSIER   dossier cible sur le serveur (défaut : /www/)
-#        CEUC_STAGING  1 = site interdit à l'indexation (défaut)
-#                      0 = site public, référencé par Google
+#   3. Facultatif, onglet Variables :
+#        CEUC_STAGING   1 = site interdit à l'indexation (défaut)
+#                       0 = site public, référencé par Google
+#        CEUC_SFTP_DIR  dossier cible (défaut : www)
 #
 # ENSUITE
 #
 #   Chaque modification poussée sur `main` reconstruit le site et l'envoie
-#   sur https://ceuc.fr — sans rien lancer à la main. C'est ce qui permet à
+#   sur https://ceuc.fr, sans rien lancer à la main. C'est ce qui permet à
 #   l'association de modifier son contenu depuis l'application Claude.
 #
 # GARDE-FOU
@@ -43,7 +43,7 @@ on:
 
 concurrency:
   group: publication
-  cancel-in-progress: true
+  cancel-in-progress: false   # ne jamais interrompre un envoi en cours
 
 jobs:
   publier:
@@ -55,8 +55,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Installer Pillow (traitement des photos)
-        run: pip install --quiet Pillow
+      - name: Installer les dépendances
+        # Pillow prépare les photos, paramiko envoie le site par SFTP.
+        run: pip install --quiet Pillow paramiko
 
       - name: Préparer les photos
         # Sans CEUC_SRC, seules les photos de assets/photos-2026 sont
@@ -75,18 +76,20 @@ jobs:
         run: python3 check.py
 
       - name: Envoyer sur l'hébergement OVH
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: ${{ vars.FTP_DOSSIER || '/www/' }}
-          # L'action garde la trace de ce qui a déjà été envoyé et ne
-          # transfère que les fichiers modifiés : une correction de texte
-          # ne réenvoie pas les 90 images du site.
-          state-name: .ftp-deploy-sync-state.json
-          exclude: |
-            **/.git*
-            **/.git*/**
+        env:
+          CEUC_SFTP_HOST: ${{ secrets.CEUC_SFTP_HOST }}
+          CEUC_SFTP_USER: ${{ secrets.CEUC_SFTP_USER }}
+          CEUC_SFTP_PASS: ${{ secrets.CEUC_SFTP_PASS }}
+          CEUC_SFTP_DIR: ${{ vars.CEUC_SFTP_DIR || 'www' }}
+        run: python3 tools/publier_ovh.py
+
+      - name: Vérifier que le site répond
+        run: |
+          for tentative in 1 2 3; do
+            code=$(curl -s -o /dev/null -m 30 -w '%{http_code}' https://ceuc.fr/)
+            [ "$code" = "200" ] && { echo "Site en ligne (HTTP $code)"; exit 0; }
+            echo "Tentative $tentative : HTTP $code"
+            sleep 10
+          done
+          echo "Le site ne répond pas correctement après l'envoi."
+          exit 1

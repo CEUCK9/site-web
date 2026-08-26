@@ -59,8 +59,18 @@ OVH par FTP. **Si `check.py` échoue, rien n'est envoyé** — le site en ligne 
 peut donc pas être cassé par une erreur.
 
 Pour l'activer : déplacer le fichier vers `.github/workflows/deploy.yml`
-(nécessite `gh auth refresh -s workflow`) et renseigner les secrets
-`FTP_SERVER`, `FTP_USERNAME` et `FTP_PASSWORD` dans les réglages du dépôt.
+(nécessite `gh auth refresh -s workflow`) et renseigner dans les réglages du
+dépôt les **secrets** `CEUC_SFTP_HOST`, `CEUC_SFTP_USER` et `CEUC_SFTP_PASS`.
+Ces trois valeurs vont en Secrets et non en Variables : GitHub masque les
+secrets dans les journaux d'exécution, qui sont publics puisque le dépôt l'est.
+
+Publication manuelle, si besoin :
+
+```bash
+CEUC_BASE_URL=https://ceuc.fr CEUC_BASE_PATH= python3 build.py
+python3 check.py
+CEUC_SFTP_HOST=… CEUC_SFTP_USER=… CEUC_SFTP_PASS=… python3 tools/publier_ovh.py
+```
 
 Le passage du site en public (indexable par Google) se fait en créant la
 variable de dépôt `CEUC_STAGING` avec la valeur `0`.
