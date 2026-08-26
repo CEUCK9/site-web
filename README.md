@@ -45,29 +45,23 @@ dist/               site généré (non versionné)
 Voir `CLAUDE.md` pour la méthodologie de travail avec l'association et
 `NOTES.md` pour le détail du contenu collecté.
 
-## Déploiement de la version de relecture
+## Hébergement et publication
 
-Le site de relecture est publié sur GitHub Pages depuis la branche `gh-pages` :
+| Adresse | Rôle | Mise à jour |
+|---|---|---|
+| <https://ceuc.fr> | site public, hébergement OVH | automatique à chaque modification poussée sur `main` |
+| <https://ceuck9.github.io/site-web/> | préversion, jamais indexée | manuelle, via `./deploy.sh` |
 
-```bash
-./deploy.sh
-```
+La publication automatique est décrite dans
+`.github/workflows-disponibles/deploy.yml.exemple` : le workflow prépare les
+photos, génère le site, lance `check.py` puis envoie `dist/` sur l'hébergement
+OVH par FTP. **Si `check.py` échoue, rien n'est envoyé** — le site en ligne ne
+peut donc pas être cassé par une erreur.
 
-Le script regénère `dist/`, lance `check.py` et pousse le résultat sur la
-branche `gh-pages`. Trois réglages en tête de fichier suffisent à couvrir tous
-les cas :
+Pour l'activer : déplacer le fichier vers `.github/workflows/deploy.yml`
+(nécessite `gh auth refresh -s workflow`) et renseigner les secrets
+`FTP_SERVER`, `FTP_USERNAME` et `FTP_PASSWORD` dans les réglages du dépôt.
 
-| Réglage | Rôle |
-|---|---|
-| `GH_USER` | organisation propriétaire du dépôt (`CEUCK9`) |
-| `DOMAINE` | nom de domaine définitif ; laissé vide tant qu'on est sur `github.io` |
-| `STAGING` | `1` version de relecture non indexable · `0` site public |
+Le passage du site en public (indexable par Google) se fait en créant la
+variable de dépôt `CEUC_STAGING` avec la valeur `0`.
 
-Renseigner `DOMAINE` bascule automatiquement le site à la racine et écrit le
-fichier `CNAME` attendu par GitHub Pages.
-
-Une alternative existe sous forme d'action GitHub
-(`.github/workflows-disponibles/deploy.yml.exemple`) : elle reconstruit et
-publie automatiquement à chaque push. Pour l'activer, déplacer le fichier dans
-`.github/workflows/deploy.yml` — cela nécessite un jeton disposant du scope
-`workflow` (`gh auth refresh -s workflow`).

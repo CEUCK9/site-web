@@ -135,14 +135,14 @@ def build_robots():
     print("  /robots.txt")
 
 
-def build_redirects():
-    """Redirections des anciennes URL .html vers la nouvelle arborescence.
+def _redirect_mapping():
+    """Anciennes URL du site free.fr → nouvelle arborescence.
 
-    Le vieux site avait ~32 pages indexées : on préserve ce qui reste de jus SEO
-    et surtout on évite d'envoyer les visiteurs sur des 404.
-    Format Netlify/Cloudflare Pages ; à traduire en règles Nginx sur le VPS OVH.
+    Le vieux site avait une trentaine de pages indexées : on préserve ce qui
+    reste de leur référencement et surtout on évite d'envoyer les visiteurs
+    sur une page introuvable.
     """
-    mapping = {
+    return {
         "/index.html": "/",
         "/mieux_nous_connaitre.html": "/le-centre/",
         "/nos_structures.html": "/le-centre/#structures",
@@ -183,9 +183,69 @@ def build_redirects():
         "/chiens/": "/vente-chiens/",
         "/formations/seminaires-audits/": "/creation-brigade-canine/",
     }
+
+
+def build_redirects():
+    """Fichier de redirections au format Netlify / Cloudflare Pages."""
+    mapping = _redirect_mapping()
     lines = [f"{old}  {new}  301" for old, new in mapping.items()]
     write("_redirects", "\n".join(lines) + "\n")
     print(f"  /_redirects ({len(mapping)} redirections)")
+
+
+def build_htaccess():
+    """Configuration Apache pour l'hébergement OVH.
+
+    Sans ce fichier le site fonctionne, mais il est servi sans compression ni
+    cache et reste accessible en HTTP simple — trois points que Google mesure
+    et qui pèsent sur le référencement.
+    """
+    redirs = "\n".join(
+        f"Redirect 301 {old} {new}" for old, new in _redirect_mapping().items()
+        if old.endswith(".html")
+    )
+    write(".htaccess", f"""# Généré par build.py — ne pas modifier à la main.
+
+# --- Page d'erreur maison plutôt que celle d'Apache ------------------------
+ErrorDocument 404 /404.html
+
+# --- Tout le trafic en HTTPS ----------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{{HTTPS}} !=on
+  RewriteCond %{{HTTP:X-Forwarded-Proto}} !https
+  RewriteRule ^(.*)$ https://%{{HTTP_HOST}}/$1 [R=301,L]
+</IfModule>
+
+# --- Compression : divise par trois le poids des pages et des styles ------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --- Cache navigateur -----------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Les images et polices ne changent pas de nom : cache court côté client,
+  # mais suffisant pour éviter de les retélécharger à chaque page.
+  ExpiresByType image/webp             "access plus 7 days"
+  ExpiresByType image/jpeg             "access plus 7 days"
+  ExpiresByType image/png              "access plus 7 days"
+  ExpiresByType image/x-icon           "access plus 30 days"
+  ExpiresByType text/css               "access plus 1 day"
+  ExpiresByType application/javascript "access plus 1 day"
+  ExpiresByType text/html              "access plus 0 seconds"
+</IfModule>
+
+# --- Anciennes adresses du site free.fr -----------------------------------
+{redirs}
+""")
+    print("  /.htaccess (HTTPS, compression, cache, redirections)")
 
 
 def copy_assets():
@@ -225,6 +285,7 @@ def main():
     build_sitemap()
     build_robots()
     build_redirects()
+    build_htaccess()
     write(".nojekyll", "")  # GitHub Pages : ne pas passer le site dans Jekyll
     copy_assets()
     print(f"\nSite généré dans {DIST}")

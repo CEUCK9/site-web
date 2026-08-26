@@ -1,27 +1,39 @@
 name: Publication du site
 
 # ---------------------------------------------------------------------------
-# À ACTIVER APRÈS LE TRANSFERT DU DÉPÔT DANS L'ORGANISATION DE L'ASSOCIATION
+# ACTIVATION (une seule fois)
 #
 #   1. Déplacer ce fichier vers .github/workflows/deploy.yml
-#      (le pousser demande un jeton disposant du droit « workflow » :
+#      (le pousser demande un jeton avec le droit « workflow » :
 #       gh auth refresh -s workflow)
-#   2. Dans Settings → Pages, choisir la source « GitHub Actions »
 #
-# Ensuite, chaque modification poussée sur `main` reconstruit et republie le
-# site automatiquement. C'est ce qui permet à l'association de modifier son
-# contenu depuis l'application Claude sans rien lancer à la main.
+#   2. Renseigner les identifiants FTP de l'hébergement OVH dans
+#      Settings → Secrets and variables → Actions → Secrets :
 #
-# Deux garde-fous :
-#   * check.py s'exécute avant la publication. S'il trouve un lien mort ou une
-#     balise SEO en double, le déploiement échoue et le site en ligne reste
-#     tel quel — une erreur ne peut pas casser le site public.
-#   * L'adresse du site est lue depuis la configuration GitHub Pages : elle
-#     s'adapte d'elle-même au transfert du dépôt, puis au nom de domaine.
+#        FTP_SERVER    ex. ftp.cluster0XX.hosting.ovh.net
+#        FTP_USERNAME  identifiant FTP de l'hébergement
+#        FTP_PASSWORD  mot de passe associé
 #
-# Passage en production : créer une variable de dépôt CEUC_STAGING valant 0
-# (Settings → Secrets and variables → Actions → Variables). Tant qu'elle vaut
-# 1, le site reste interdit à l'indexation par Google.
+#      Ces trois valeurs se trouvent dans l'espace client OVH, rubrique
+#      Hébergements → FTP-SSH. Une fois enregistrées comme secrets, elles
+#      ne sont plus lisibles, y compris par les administrateurs.
+#
+#   3. Facultatif, dans Variables (et non Secrets) :
+#        FTP_DOSSIER   dossier cible sur le serveur (défaut : /www/)
+#        CEUC_STAGING  1 = site interdit à l'indexation (défaut)
+#                      0 = site public, référencé par Google
+#
+# ENSUITE
+#
+#   Chaque modification poussée sur `main` reconstruit le site et l'envoie
+#   sur https://ceuc.fr — sans rien lancer à la main. C'est ce qui permet à
+#   l'association de modifier son contenu depuis l'application Claude.
+#
+# GARDE-FOU
+#
+#   check.py s'exécute AVANT l'envoi. S'il trouve un lien mort, une balise
+#   en double ou une image sans description, la publication échoue et le
+#   site en ligne reste intact. Une erreur ne peut pas casser le site.
 # ---------------------------------------------------------------------------
 
 on:
@@ -29,17 +41,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: publication
   cancel-in-progress: true
 
 jobs:
-  build:
+  publier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,41 +58,35 @@ jobs:
       - name: Installer Pillow (traitement des photos)
         run: pip install --quiet Pillow
 
-      - name: Configurer GitHub Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
       - name: Préparer les photos
         # Sans CEUC_SRC, seules les photos de assets/photos-2026 sont
-        # régénérées : il suffit donc de déposer une photo dans ce dossier et
-        # de la déclarer dans src/images.py pour qu'elle arrive sur le site.
+        # régénérées : déposer une photo dans ce dossier et la déclarer dans
+        # src/images.py suffit à la faire arriver sur le site.
         run: python3 src/images.py
 
       - name: Générer le site
         env:
-          # Renseignées automatiquement par configure-pages : après le
-          # transfert du dépôt, puis après la mise en place du nom de domaine,
-          # ces valeurs suivent sans qu'on touche au fichier.
-          CEUC_BASE_URL: ${{ steps.pages.outputs.origin }}
-          CEUC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          CEUC_BASE_URL: https://ceuc.fr
+          CEUC_BASE_PATH: ""
           CEUC_STAGING: ${{ vars.CEUC_STAGING || '1' }}
         run: python3 build.py
 
       - name: Contrôler liens, SEO et structure
-        env:
-          CEUC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: python3 check.py
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Envoyer sur l'hébergement OVH
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_DOSSIER || '/www/' }}
+          # L'action garde la trace de ce qui a déjà été envoyé et ne
+          # transfère que les fichiers modifiés : une correction de texte
+          # ne réenvoie pas les 90 images du site.
+          state-name: .ftp-deploy-sync-state.json
+          exclude: |
+            **/.git*
+            **/.git*/**

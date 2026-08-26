@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
-# Publie le site sur GitHub Pages (branche gh-pages).
+# Publie une PRÉVERSION du site sur GitHub Pages.
 #
-# Deux modes, pilotés par les variables ci-dessous :
+# Le site public, lui, est servi par l'hébergement OVH de l'association :
+# il est mis à jour automatiquement à chaque modification poussée sur
+# `main` (voir .github/workflows-disponibles/deploy.yml.exemple).
 #
-#   * Relecture (par défaut) — le site est servi depuis un sous-chemin
-#     GitHub Pages et interdit à l'indexation, pour ne pas concurrencer le
-#     futur site sur son vrai domaine.
-#
-#   * Production — dès qu'un nom de domaine est branché sur le dépôt :
-#     mettre GH_USER/REPO à jour n'est plus nécessaire, il suffit de
-#     renseigner DOMAINE et de passer STAGING à 0.
+# Ce script sert donc à regarder un changement avant de le publier, ou à
+# dépanner si l'envoi automatique est en panne. La préversion est toujours
+# interdite à l'indexation.
 set -euo pipefail
 
 cd "$(dirname "$0")"
@@ -19,9 +17,10 @@ cd "$(dirname "$0")"
 GH_USER="${CEUC_GH_USER:-CEUCK9}"
 # Nom du dépôt (sert de sous-chemin sur GitHub Pages).
 REPO="${CEUC_REPO:-site-web}"
-# Nom de domaine définitif. Renseigné : le site est servi à la racine et le
-# fichier CNAME attendu par GitHub Pages est écrit automatiquement.
-DOMAINE="${CEUC_DOMAINE:-ceuc.fr}"
+# Nom de domaine servi par GitHub Pages. Laissé vide : le site public vit
+# sur l'hébergement OVH (voir .github/workflows), et cette adresse github.io
+# ne sert plus que de préversion.
+DOMAINE="${CEUC_DOMAINE:-}"
 # 1 = version de relecture (non indexable) · 0 = site public définitif.
 STAGING="${CEUC_STAGING:-1}"
 # ----------------------------------------------------------------------------
