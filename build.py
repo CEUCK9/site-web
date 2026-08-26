@@ -202,7 +202,9 @@ def build_htaccess():
     """
     redirs = "\n".join(
         f"Redirect 301 {old} {new}" for old, new in _redirect_mapping().items()
-        if old.endswith(".html")
+        # « /index.html » est exclu : le fichier existe bel et bien sur le
+        # nouveau site, et le rediriger vers « / » boucle avec DirectoryIndex.
+        if old.endswith(".html") and old != "/index.html"
     )
     write(".htaccess", f"""# Généré par build.py — ne pas modifier à la main.
 
@@ -212,9 +214,9 @@ ErrorDocument 404 /404.html
 # --- Tout le trafic en HTTPS ----------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{{SERVER_PORT}} !^443$
   RewriteCond %{{HTTPS}} !=on
-  RewriteCond %{{HTTP:X-Forwarded-Proto}} !https
-  RewriteRule ^(.*)$ https://%{{HTTP_HOST}}/$1 [R=301,L]
+  RewriteRule ^(.*)$ https://%{{SERVER_NAME}}/$1 [R=301,L]
 </IfModule>
 
 # --- Compression : divise par trois le poids des pages et des styles ------
