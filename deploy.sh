@@ -19,9 +19,9 @@ cd "$(dirname "$0")"
 GH_USER="${CEUC_GH_USER:-CEUCK9}"
 # Nom du dépôt (sert de sous-chemin sur GitHub Pages).
 REPO="${CEUC_REPO:-site-web}"
-# Nom de domaine définitif, une fois réservé et branché (ex. "ceuc.fr").
-# Laisser vide tant que le site tourne sur l'adresse github.io.
-DOMAINE="${CEUC_DOMAINE:-}"
+# Nom de domaine définitif. Renseigné : le site est servi à la racine et le
+# fichier CNAME attendu par GitHub Pages est écrit automatiquement.
+DOMAINE="${CEUC_DOMAINE:-ceuc.fr}"
 # 1 = version de relecture (non indexable) · 0 = site public définitif.
 STAGING="${CEUC_STAGING:-1}"
 # ----------------------------------------------------------------------------
@@ -52,8 +52,15 @@ fi
 WORKTREE="$(mktemp -d)"
 trap 'git worktree remove --force "$WORKTREE" 2>/dev/null || true; rm -rf "$WORKTREE"' EXIT
 
-if git show-ref --quiet refs/heads/gh-pages; then
-  git worktree add -q "$WORKTREE" gh-pages
+# On repart toujours de ce qui est réellement publié, jamais d'une copie
+# locale : GitHub écrit lui-même sur cette branche (fichier CNAME ajouté
+# quand on renseigne un domaine dans l'interface), et une branche locale
+# obsolète ferait échouer la publication.
+git fetch -q origin gh-pages 2>/dev/null || true
+if git show-ref --quiet refs/remotes/origin/gh-pages; then
+  git worktree add -q --detach "$WORKTREE" origin/gh-pages
+elif git show-ref --quiet refs/heads/gh-pages; then
+  git worktree add -q --detach "$WORKTREE" gh-pages
 else
   git worktree add -q --orphan -b gh-pages "$WORKTREE"
 fi
@@ -67,7 +74,7 @@ if git -C "$WORKTREE" diff --cached --quiet; then
   exit 0
 fi
 git -C "$WORKTREE" commit -q -m "Publication — $(date '+%d/%m/%Y %H:%M')"
-git -C "$WORKTREE" push -q origin gh-pages
+git -C "$WORKTREE" push -q origin HEAD:gh-pages
 
 echo
 if [ "$STAGING" = "1" ]; then
