@@ -689,7 +689,7 @@ formation_page(
     title="Formation olfaction : recherche de personnes et détection | CEUC",
     description=(
         "Formation des équipes cynophiles à l'olfaction : recherche de personnes, "
-        "détection d'explosifs, de stupéfiants, d'armes et de munitions."
+        "détection d'armes et de munitions."
     ),
     eyebrow="Olfaction & recherche",
     h1="Formation olfaction, recherche et détection",
@@ -703,8 +703,7 @@ formation_page(
         "nom": "Formation olfaction et détection",
         "description": (
             "Formation des équipes cynophiles en recherche de personnes (décombres, "
-            "avalanches, questage) et en détection de matières explosives, de produits "
-            "stupéfiants, d'armes et de munitions."
+            "avalanches, questage) et en détection d'armes et de munitions."
         ),
     },
     body=(
@@ -714,14 +713,6 @@ formation_page(
                 {
                     "titre": "Recherche de personnes",
                     "texte": "Décombres, avalanches, questage — pour les équipes des services de secours et de sécurité publique.",
-                },
-                {
-                    "titre": "Matières explosives",
-                    "texte": "Créancement des chiens à la détection d'explosifs, avec protocoles adaptés aux contraintes opérationnelles.",
-                },
-                {
-                    "titre": "Produits stupéfiants",
-                    "texte": "Détection de stupéfiants pour les unités de police, de gendarmerie et des douanes.",
                 },
                 {
                     "titre": "Armes et munitions",
