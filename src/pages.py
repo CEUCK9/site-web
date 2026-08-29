@@ -1168,7 +1168,7 @@ page(
             ),
             content=cards([
                 {
-                    "titre": "Berger Belge Malinois — 18 mois",
+                    "titre": "Berger Belge Malinois — 34 mois",
                     "texte": "Placé en unité canine de Police Municipale.",
                     "tag": "Vendu — Police Municipale",
                     "image": "vente-malinois-pm",
