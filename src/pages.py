@@ -1321,7 +1321,7 @@ page(
             ),
         )
         + section(
-            content=gallery([(i, item["alt"]) for i, item in enumerate(_GAL, 1)])
+            content=gallery([(i, item["alt"]) for i, item in enumerate(_GAL, 1)], captions=False)
         )
         + callout(
             title="Toute notre actualité sur les réseaux",

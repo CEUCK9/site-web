@@ -200,17 +200,22 @@ def photo_strip(items, *, title=None, captions=True):
     return f'<div class="strip strip--{len(items)}">{head}{"".join(figs)}</div>'
 
 
-def gallery(items):
-    """items : liste de (index, légende)"""
+def gallery(items, *, captions=True):
+    """items : liste de (index, légende)
+
+    La légende sert toujours de texte alternatif ; `captions=False` masque
+    seulement le texte affiché sous la photo.
+    """
     out = []
     for idx, legende in items:
         n = f"galerie-{idx:02d}"
+        cap = f'<figcaption class="gal__cap">{e(legende)}</figcaption>' if captions else ""
         out.append(
             f'<figure class="gal__item">'
             f'<a href="/assets/img/{n}.jpg" class="gal__link" '
             f'aria-label="Agrandir : {e(legende)}">'
             f'{picture(n + "-thumb", legende, cls="gal__pic")}</a>'
-            f'<figcaption class="gal__cap">{e(legende)}</figcaption></figure>'
+            f'{cap}</figure>'
         )
     return f'<div class="gal">{"".join(out)}</div>'
 
