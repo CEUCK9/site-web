@@ -99,8 +99,15 @@ seulement ; il en manque pour :
 
 ## Maintenant que le site est indexable
 
-- [ ] **Démarches Google** — Search Console et fiche Business : la marche à
-      suivre est détaillée dans `REFERENCEMENT.md`
+- [x] **Search Console** — site déclaré par Maxime (29/08/2026)
+- [ ] **Fiche Google Business** — marche à suivre détaillée dans
+      `REFERENCEMENT.md`
+- [ ] **« ceuc » ne remonte pas encore sur Google, l'ancien site oui** —
+      normal les premiers jours (nouveau domaine sans ancienneté). À
+      vérifier : l'ancien site (`ceuc.free.fr` ?) est-il toujours en ligne
+      séparément ? Si Maxime le gère encore, le fermer ou le rediriger vers
+      `ceuc.fr` aiderait Google à transférer la confiance vers la nouvelle
+      adresse.
 - [ ] **Relecture du contenu rédigé faute de matière** — FAQ, « comment nous
       travaillons avec les productions », descriptifs des spécialités
       olfactives, page SST. Ce texte est désormais public et indexé.
