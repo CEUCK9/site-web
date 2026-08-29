@@ -589,6 +589,17 @@ formation_page(
                 )
             ),
         )
+        + section(
+            content=photo_strip([
+                ("police-municipale-01",
+                 "Briefing d'un instructeur cynotechnique avec une équipe de Police Municipale"),
+                ("police-municipale-02",
+                 "Mise en situation d'intervention en bâtiment de nuit"),
+                ("police-municipale-03",
+                 "Progression d'une équipe cynophile avec son chien en intérieur"),
+            ], title="En images", captions=False),
+            cls="section--tight",
+        )
     ),
     faq_items=[
         (
