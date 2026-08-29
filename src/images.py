@@ -23,7 +23,7 @@ PHOTOS_2026 = {
     # Accueil — bandeau large, on garde le cadrage d'origine.
     "page_acceuil.jpg":        ("hero-rassemblement",       1400, None),
     # Le centre — photo d'équipe.
-    "centre.jpg":              ("equipe-ceuc",               900, (4, 3)),
+    "equipe_2.jpg":            ("equipe-ceuc",               900, (4, 3)),
     # Stage de perfectionnement.
     "perfectionnement_1.jpg":  ("perfectionnement-01",       900, (3, 2)),
     "perfectionnement_2.jpg":  ("perfectionnement-02",       900, (3, 2)),
