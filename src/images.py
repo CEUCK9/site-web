@@ -27,6 +27,9 @@ PHOTOS_2026 = {
     # Stage de perfectionnement.
     "perfectionnement_1.jpg":  ("perfectionnement-01",       900, (3, 2)),
     "perfectionnement_2.jpg":  ("perfectionnement-02",       900, (3, 2)),
+    "perfectionnement_3.jpg":  ("perfectionnement-03",       900, (3, 2)),
+    "perfectionnement_4.jpg":  ("perfectionnement-04",       900, (3, 2)),
+    "perfectionnement_5.jpg":  ("perfectionnement-05",       900, (3, 2)),
     # Olfaction / recherche de personnes.
     "recherche_personne.jpg":  ("recherche-personne",        900, (3, 2)),
     # Secourisme SST — portrait, on conserve un cadrage vertical doux.

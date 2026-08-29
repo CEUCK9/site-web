@@ -674,10 +674,12 @@ formation_page(
                 "<p><a href='/le-centre/'>Découvrir l'équipe du centre →</a></p>"
             )
             + photo_strip([
-                ("perfectionnement-01",
-                 "Mise en situation d'intervention en extérieur lors d'un stage de perfectionnement"),
-                ("perfectionnement-02",
-                 "Exercice d'interpellation avec appui du chien pendant un stage"),
+                ("perfectionnement-03",
+                 "Exercice de mordant opérationnel de nuit, sous hangar, lors d'un stage de perfectionnement"),
+                ("perfectionnement-04",
+                 "Séance théorique et briefing cartographique en salle lors d'un stage de perfectionnement"),
+                ("perfectionnement-05",
+                 "Mise en situation d'interpellation de nuit avec appui du chien lors d'un stage de perfectionnement"),
             ], title="En images", captions=False),
         )
     ),
