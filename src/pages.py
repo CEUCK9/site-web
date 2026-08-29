@@ -317,9 +317,10 @@ page(
                 "d'apporter une plus-value réelle aux stagiaires."
             ),
             content=team(MEMBRES)
-            + photo_strip(
-                [("equipe-ceuc", "L'équipe du CEUC sur le terrain d'entraînement de Meximieux")],
-            ),
+            + photo_strip([
+                ("equipe-ceuc", "L'équipe du CEUC sur le terrain d'entraînement de Meximieux"),
+                ("equipe-formateurs", "Trois formateurs du CEUC réunis sur le terrain d'entraînement"),
+            ]),
         )
         + section(
             id="structures",
