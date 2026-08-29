@@ -61,7 +61,7 @@ FORMATIONS_CARDS = [
         "texte": "Formation obligatoire des maîtres de chiens dits dangereux ou mordeurs, tout au long de l'année sur rendez-vous.",
         "url": "/particuliers/permis-chien-categorise/",
         "image": "particuliers-education",
-        "alt": "Chien de type molossoïde tenu en laisse en extérieur",
+        "alt": "Staffordshire Bull Terrier en extérieur, chien concerné par la réglementation sur les chiens catégorisés",
         "tag": "Particuliers",
     },
 ]
@@ -108,7 +108,7 @@ page(
     body=(
         hero(
             eyebrow="Meximieux · Ain · France entière",
-            title="Former les équipes cynophiles<br><span class='hl'>à la réalité du terrain</span>",
+            title="Formation cynophile professionnelle<br><span class='hl'>pour les unités de Police Municipale</span>",
             lead=(
                 "Le <strong>CEUC</strong> est un centre d'instruction cynophile dédié aux "
                 "professionnels des unités cynotechniques des administrations — Police "
@@ -1060,7 +1060,7 @@ page(
                 "chiens dits « dangereux » et/ou « mordeurs »."
             ),
             image="particuliers-education",
-            image_alt="Chien de type molossoïde tenu en laisse, concerné par la réglementation sur les chiens catégorisés",
+            image_alt="Staffordshire Bull Terrier, chien concerné par la réglementation sur les chiens catégorisés",
         )
         + section(
             title="Ce que dit la réglementation",

@@ -35,8 +35,8 @@ PHOTOS_2026 = {
     "recherche_personne.jpg":  ("recherche-personne",        900, (3, 2)),
     # Secourisme SST — portrait, on conserve un cadrage vertical doux.
     "secourisme.jpg":          ("secourisme-sst",            800, (4, 5)),
-    # Permis de détention chien catégorisé — photo libre de droits (Pexels).
-    "pexels-gy1610-5771496.jpg": ("particuliers-education",  700, (4, 5)),
+    # Permis de détention chien catégorisé.
+    "particuliers-staff.jpg":   ("particuliers-education",   700, (4, 5)),
     # Formation cynotechnicien de Police Municipale.
     "police_municipale_1.jpg":  ("police-municipale-01",     900, (3, 2)),
     "police_municipale_2.jpg":  ("police-municipale-02",     900, (3, 2)),
