@@ -678,7 +678,7 @@ formation_page(
                  "Mise en situation d'intervention en extérieur lors d'un stage de perfectionnement"),
                 ("perfectionnement-02",
                  "Exercice d'interpellation avec appui du chien pendant un stage"),
-            ], title="En images"),
+            ], title="En images", captions=False),
         )
     ),
 )
