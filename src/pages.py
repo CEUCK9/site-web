@@ -108,7 +108,7 @@ page(
     body=(
         hero(
             eyebrow="Meximieux · Ain · France entière",
-            title="Former les équipes cynophiles<br><span class='hl'>à la réalité du terrain</span>",
+            title="Formation cynophile professionnelle<br><span class='hl'>pour les unités de Police Municipale</span>",
             lead=(
                 "Le <strong>CEUC</strong> est un centre d'instruction cynophile dédié aux "
                 "professionnels des unités cynotechniques des administrations — Police "
