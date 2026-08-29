@@ -61,7 +61,7 @@ FORMATIONS_CARDS = [
         "texte": "Formation obligatoire des maîtres de chiens dits dangereux ou mordeurs, tout au long de l'année sur rendez-vous.",
         "url": "/particuliers/permis-chien-categorise/",
         "image": "particuliers-education",
-        "alt": "Séance d'éducation canine encadrée en extérieur",
+        "alt": "Chien de type molossoïde tenu en laisse en extérieur",
         "tag": "Particuliers",
     },
 ]
@@ -1049,7 +1049,7 @@ page(
                 "chiens dits « dangereux » et/ou « mordeurs »."
             ),
             image="particuliers-education",
-            image_alt="Séance d'éducation canine encadrée en extérieur par le CEUC",
+            image_alt="Chien de type molossoïde tenu en laisse, concerné par la réglementation sur les chiens catégorisés",
         )
         + section(
             title="Ce que dit la réglementation",
