@@ -37,6 +37,8 @@ PHOTOS_2026 = {
     "secourisme.jpg":          ("secourisme-sst",            800, (4, 5)),
     # Permis de détention chien catégorisé.
     "particuliers-staff.jpg":   ("particuliers-education",   700, (4, 5)),
+    # Vente de chiens — chiens récemment placés.
+    "vente-malinois-pm-18mois.jpg": ("vente-malinois-pm",    900, (3, 2)),
     # Formation cynotechnicien de Police Municipale.
     "police_municipale_1.jpg":  ("police-municipale-01",     900, (3, 2)),
     "police_municipale_2.jpg":  ("police-municipale-02",     900, (3, 2)),
