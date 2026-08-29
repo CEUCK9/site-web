@@ -75,3 +75,13 @@ CEUC_SFTP_HOST=… CEUC_SFTP_USER=… CEUC_SFTP_PASS=… python3 tools/publier_o
 Le passage du site en public (indexable par Google) se fait en créant la
 variable de dépôt `CEUC_STAGING` avec la valeur `0`.
 
+### Vérification avant fusion
+
+`.github/workflows-disponibles/verification-pr.yml.exemple` ajoute le même
+contrôle **sur les pull requests**, avant la fusion. GitHub affiche alors une
+coche verte ou une croix rouge au-dessus du bouton « Merge », ce qui donne à
+l'association un signal clair avant de publier.
+
+Pour le rendre bloquant : Settings → Branches → règle de protection sur `main`
+→ *Require status checks to pass before merging* → cocher « Contrôler le site ».
+

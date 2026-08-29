@@ -1,0 +1,104 @@
+name: Vérification avant fusion
+
+# ---------------------------------------------------------------------------
+# À QUOI ÇA SERT
+#
+#   Ce contrôle se déclenche sur chaque pull request, AVANT la fusion.
+#   GitHub affiche son résultat juste au-dessus du bouton « Merge » :
+#
+#       ✅ All checks have passed        → on peut fusionner
+#       ❌ Some checks were not successful → ne pas fusionner, redemander
+#                                            une correction à Claude
+#
+#   Sans lui, check.py ne s'exécute qu'APRÈS la fusion : une erreur est
+#   alors découverte trop tard, dans un onglet que personne ne consulte.
+#
+# ACTIVATION (une seule fois)
+#
+#   1. Déplacer ce fichier vers .github/workflows/verification-pr.yml
+#      (le pousser demande un jeton avec le droit « workflow » ; sinon le
+#       créer via Add file → Create new file sur github.com)
+#
+#   2. Recommandé — rendre le contrôle bloquant, pour que le bouton
+#      « Merge » reste inactif tant que le résultat est rouge :
+#
+#        Settings → Branches → Add branch protection rule
+#          Branch name pattern : main
+#          ☑ Require status checks to pass before merging
+#            puis choisir « Contrôler le site » dans la liste
+#
+#      Sans cette étape le contrôle s'affiche mais n'empêche rien.
+#
+# CE QUI EST VÉRIFIÉ
+#
+#   Liens internes morts, images sans description, titres ou descriptions
+#   en double ou hors limites pour Google, hiérarchie des titres, données
+#   structurées invalides, pages absentes du plan du site. Autrement dit
+#   tout ce qui abîmerait le référencement.
+#
+#   Aucun fichier n'est envoyé sur l'hébergement : ce workflow ne fait que
+#   contrôler. La publication reste le rôle de deploy.yml, sur `main`.
+# ---------------------------------------------------------------------------
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  # Une nouvelle version de la même pull request annule le contrôle en cours :
+  # seul le dernier état compte.
+  group: verification-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  controler:
+    name: Contrôler le site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer Pillow (traitement des photos)
+        run: pip install --quiet Pillow
+
+      - name: Préparer les photos
+        run: python3 src/images.py
+
+      - name: Générer le site
+        env:
+          CEUC_BASE_URL: https://ceuc.fr
+          CEUC_BASE_PATH: ""
+          CEUC_STAGING: ${{ vars.CEUC_STAGING || '1' }}
+        run: python3 build.py
+
+      - name: Contrôler liens, SEO et structure
+        run: python3 check.py
+
+      - name: Résumer le résultat
+        # Ce résumé s'affiche dans l'onglet du contrôle : en cas d'échec,
+        # il rappelle quoi faire plutôt que de laisser une trace technique.
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            {
+              echo "## ✅ Le site est correct"
+              echo ""
+              echo "Vous pouvez fusionner cette modification."
+              echo "Le site sera mis à jour sur https://ceuc.fr environ"
+              echo "90 secondes après la fusion."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## ❌ Un problème a été détecté"
+              echo ""
+              echo "**Ne fusionnez pas cette modification.**"
+              echo ""
+              echo "Retournez dans la conversation avec Claude et demandez-lui"
+              echo "de corriger le problème. Le détail figure dans l'étape"
+              echo "« Contrôler liens, SEO et structure » ci-dessus."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
