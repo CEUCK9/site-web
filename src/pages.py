@@ -737,8 +737,7 @@ formation_page(
             cls="section--dark section--tight",
             content=(
                 "<p class='big-quote'>Toutes ces formations sont modulables en fonction de "
-                "votre cahier des charges — créancement sur un ou plusieurs produits, "
-                "spécificités propres à votre service.</p>"
+                "votre cahier des charges.</p>"
             ),
         )
     ),
