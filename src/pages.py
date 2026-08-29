@@ -42,7 +42,7 @@ FORMATIONS_CARDS = [
     },
     {
         "titre": "Olfaction &amp; recherche",
-        "texte": "Créancement des équipes cynophiles en recherche de personnes, armes et munitions.",
+        "texte": "Créancement des équipes cynophiles en recherche de personnes : décombres, avalanches, questage.",
         "url": "/formations/olfaction-detection/",
         "image": "olfaction-detection",
         "alt": "Chien de détection au travail lors d'un exercice d'olfaction",
@@ -688,8 +688,8 @@ formation_page(
     slug="formations/olfaction-detection/",
     title="Formation olfaction : recherche de personnes et détection | CEUC",
     description=(
-        "Formation des équipes cynophiles à l'olfaction : recherche de personnes, "
-        "détection d'armes et de munitions."
+        "Formation des équipes cynophiles à l'olfaction : recherche de personnes en "
+        "décombres, avalanches et questage."
     ),
     eyebrow="Olfaction & recherche",
     h1="Formation olfaction, recherche et détection",
@@ -702,8 +702,8 @@ formation_page(
     course={
         "nom": "Formation olfaction et détection",
         "description": (
-            "Formation des équipes cynophiles en recherche de personnes (décombres, "
-            "avalanches, questage) et en détection d'armes et de munitions."
+            "Formation des équipes cynophiles en recherche de personnes : décombres, "
+            "avalanches et questage."
         ),
     },
     body=(
@@ -713,10 +713,6 @@ formation_page(
                 {
                     "titre": "Recherche de personnes",
                     "texte": "Décombres, avalanches, questage — pour les équipes des services de secours et de sécurité publique.",
-                },
-                {
-                    "titre": "Armes et munitions",
-                    "texte": "Recherche d'armes et de munitions, en complément des spécialités d'intervention.",
                 },
                 {
                     "titre": "Autres spécificités",
