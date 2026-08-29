@@ -1176,6 +1176,13 @@ page(
                 },
                 {
                     "titre": "Berger Belge Malinois — 12 mois",
+                    "texte": "Mâle placé en unité canine de Police Municipale.",
+                    "tag": "Vendu — Police Municipale",
+                    "image": "vente-malinois-mordant",
+                    "alt": "Berger Belge Malinois au mordant sur manchon lors d'un exercice",
+                },
+                {
+                    "titre": "Berger Belge Malinois — 12 mois",
                     "texte": "LOF, origines 100 % travail, sélectionné auprès de l'élevage du « Petit Pic ». Idéal olfaction (stupéfiants, explosifs) et patrouille-intervention. Très joueur, très stable.",
                     "tag": "Vendu — usage professionnel",
                 },
