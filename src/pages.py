@@ -318,7 +318,6 @@ page(
             ),
             content=team(MEMBRES)
             + photo_strip([
-                ("equipe-ceuc", "L'équipe du CEUC sur le terrain d'entraînement de Meximieux"),
                 ("equipe-formateurs", "Trois formateurs du CEUC réunis sur le terrain d'entraînement"),
             ]),
         )
