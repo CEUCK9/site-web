@@ -1168,6 +1168,13 @@ page(
             ),
             content=cards([
                 {
+                    "titre": "Berger Belge Malinois — 18 mois",
+                    "texte": "Placé en unité canine de Police Municipale.",
+                    "tag": "Vendu — Police Municipale",
+                    "image": "vente-malinois-pm",
+                    "alt": "Berger Belge Malinois en unité canine, assis à côté d'un véhicule de Police Municipale",
+                },
+                {
                     "titre": "Berger Belge Malinois — 12 mois",
                     "texte": "LOF, origines 100 % travail, sélectionné auprès de l'élevage du « Petit Pic ». Idéal olfaction (stupéfiants, explosifs) et patrouille-intervention. Très joueur, très stable.",
                     "tag": "Vendu — usage professionnel",
