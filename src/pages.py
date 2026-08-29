@@ -42,7 +42,7 @@ FORMATIONS_CARDS = [
     },
     {
         "titre": "Olfaction &amp; recherche",
-        "texte": "Créancement des équipes cynophiles en recherche de personnes, explosifs, stupéfiants, armes et munitions.",
+        "texte": "Créancement des équipes cynophiles en recherche de personnes, armes et munitions.",
         "url": "/formations/olfaction-detection/",
         "image": "olfaction-detection",
         "alt": "Chien de détection au travail lors d'un exercice d'olfaction",
