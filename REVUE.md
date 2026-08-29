@@ -99,14 +99,14 @@ seulement ; il en manque pour :
 
 ## Maintenant que le site est indexable
 
-- [ ] Soumettre le sitemap à la **Google Search Console**
-- [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
-- [ ] Faire relire par Maxime le contenu rédigé faute de matière : FAQ,
-      « comment nous travaillons avec les productions », descriptifs des
-      spécialités olfactives, page SST. Ce texte est désormais public.
-- [ ] Créer / revendiquer la **fiche Google Business Profile** (Meximieux)
-- [ ] Soumettre le sitemap à la **Google Search Console**
-- [ ] Activer les **redirections 301** depuis `ceuc.free.fr` — le fichier
-      `_redirects` généré contient les 37 règles (GitHub Pages les ignore,
-      elles fonctionneront sur le VPS ou sur Netlify)
-- [ ] Retirer `CEUC_STAGING` pour autoriser l'indexation du site définitif
+- [ ] **Démarches Google** — Search Console et fiche Business : la marche à
+      suivre est détaillée dans `REFERENCEMENT.md`
+- [ ] **Relecture du contenu rédigé faute de matière** — FAQ, « comment nous
+      travaillons avec les productions », descriptifs des spécialités
+      olfactives, page SST. Ce texte est désormais public et indexé.
+      Le retrait des mentions explosifs / stupéfiants du 29/08 est
+      exactement le type de correction attendu.
+- [x] **Redirections depuis `ceuc.free.fr`** — les 35 règles sont dans le
+      `.htaccess` généré, actif sur l'hébergement OVH.
+- [x] **Indexation autorisée** — `CEUC_STAGING` vaut `0` depuis le
+      26/08/2026.

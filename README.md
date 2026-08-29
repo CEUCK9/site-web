@@ -42,8 +42,12 @@ assets/img/         images optimisées (versionnées)
 dist/               site généré (non versionné)
 ```
 
-Voir `CLAUDE.md` pour la méthodologie de travail avec l'association et
-`NOTES.md` pour le détail du contenu collecté.
+| Document | Contenu |
+|---|---|
+| `CLAUDE.md` | mode d'emploi pour les sessions Claude de l'association |
+| `REVUE.md` | retours traités, photos attendues, questions en suspens |
+| `REFERENCEMENT.md` | démarches Google (Search Console, fiche Business) |
+| `NOTES.md` | détail du contenu d'origine et sa provenance |
 
 ## Hébergement et publication
 

@@ -166,5 +166,10 @@ structurées et un maillage entre les pages. Quelques réflexes à conserver :
 `REVUE.md` liste ce qui a été traité, les photos encore attendues et les
 questions en suspens. Tiens-le à jour quand un point est réglé.
 
+`REFERENCEMENT.md` explique les deux démarches à faire chez Google (Search
+Console et fiche Business) et liste les informations que le site attend
+encore : horaires, coordonnées GPS, lien vers la fiche. Si Maxime te donne
+l'une d'elles, inscris-la et coche la ligne correspondante.
+
 `NOTES.md` conserve le détail du contenu d'origine, pour retrouver la source
 d'une information.
