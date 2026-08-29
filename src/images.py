@@ -36,6 +36,10 @@ PHOTOS_2026 = {
     "secourisme.jpg":          ("secourisme-sst",            800, (4, 5)),
     # Permis de détention chien catégorisé — photo libre de droits (Pexels).
     "pexels-gy1610-5771496.jpg": ("particuliers-education",  700, (4, 5)),
+    # Formation cynotechnicien de Police Municipale.
+    "police_municipale_1.jpg":  ("police-municipale-01",     900, (3, 2)),
+    "police_municipale_2.jpg":  ("police-municipale-02",     900, (3, 2)),
+    "police_municipale_3.jpg":  ("police-municipale-03",     900, (3, 2)),
 }
 
 # Chaque entrée : fichier source -> (nom de sortie, largeur max, ratio de recadrage ou None)
