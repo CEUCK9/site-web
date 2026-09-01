@@ -35,7 +35,7 @@ PHOTOS_2026 = {
     # Secourisme SST — portrait, on conserve un cadrage vertical doux.
     "secourisme.jpg":          ("secourisme-sst",            800, (4, 5)),
     # Permis de détention chien catégorisé.
-    "particuliers-staff.jpg":   ("particuliers-education",   700, (4, 5)),
+    "particuliers-rottweiler.jpg": ("particuliers-education", 700, (4, 5)),
     # Vente de chiens — chiens récemment placés.
     "vente-malinois-pm-18mois.jpg": ("vente-malinois-pm",    900, (3, 2)),
     "vente-malinois-pm-12mois.jpg": ("vente-malinois-mordant", 900, (3, 2)),
