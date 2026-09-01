@@ -305,7 +305,8 @@ page(
             ),
             image="malinois-police",
             image_alt=(
-                "Chien de Police Municipale en harnais lors d'un entraînement au centre CEUC"
+                "Policier municipal lors d'une présentation en salle sur le travail des "
+                "chiens au CEUC"
             ),
         )
         + section(

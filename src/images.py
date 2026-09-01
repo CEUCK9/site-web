@@ -24,6 +24,8 @@ PHOTOS_2026 = {
     "page_acceuil.jpg":        ("hero-rassemblement",       1400, None),
     # Le centre — photo d'équipe.
     "equipe_3.jpg":            ("equipe-formateurs",         900, (4, 3)),
+    # Le centre — photo d'en-tête (salle de formation).
+    "presentation-formation.jpg": ("malinois-police",        900, (4, 3)),
     # Stage de perfectionnement.
     "perfectionnement_1.jpg":  ("perfectionnement-01",       900, (3, 2)),
     "perfectionnement_2.jpg":  ("perfectionnement-02",       900, (3, 2)),
