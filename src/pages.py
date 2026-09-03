@@ -128,6 +128,10 @@ page(
                 "Formateurs en activité",
             ],
         )
+        + callout(
+            title="Stage cynotechnicien &amp; assistant cynotechnicien",
+            text="Du 28 septembre au 2 octobre. Venez vous renseigner.",
+        )
         + section(
             cls="section--tight section--stats",
             content=stats([
