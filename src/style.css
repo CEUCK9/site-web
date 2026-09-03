@@ -311,6 +311,33 @@ a:hover { color: var(--brand-600); }
   .hero__media { order: -1; }
 }
 
+/* Pense-bête épinglé sur la photo du hero, pour une annonce ponctuelle. */
+.memo-note {
+  position: absolute; top: -16px; right: -14px; z-index: 3;
+  max-width: 230px; padding: 1.1rem 1.2rem 1rem;
+  background: #fff3c4; color: #4a3a06; border-radius: 4px;
+  font-size: .85rem; line-height: 1.45;
+  transform: rotate(4deg);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .3), 0 2px 6px rgba(0, 0, 0, .15);
+}
+.memo-note::before {
+  content: ""; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8564f, #b5231d);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .35);
+}
+.memo-note__title { margin: 0 0 .35em; font-weight: 800; color: #2c2200; }
+.memo-note__text { margin: 0; }
+.memo-note__cta {
+  display: inline-block; margin-top: .6rem; font-weight: 700; font-size: .8rem;
+  color: #55692a; text-decoration: underline;
+}
+@media (max-width: 900px) {
+  .memo-note {
+    position: static; transform: rotate(-1.5deg); margin: 1rem auto 0; max-width: 280px;
+  }
+}
+
 /* ------------------------------------------------------- En-tête de page - */
 
 .page-head {

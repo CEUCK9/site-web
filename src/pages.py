@@ -7,7 +7,8 @@ et le référencement (mots-clés, structure de titres, maillage interne).
 
 from components import (
     bullets, callout, cards, faq, faq_jsonld, feature_rows, gallery, hero,
-    legal_note, modules, page_header, photo_strip, picture, section, stats, team,
+    legal_note, memo_note, modules, page_header, photo_strip, picture, section,
+    stats, team,
 )
 from template import BASE_URL, ORG, e
 
@@ -127,10 +128,12 @@ page(
                 "Habilité DDPP & Préfecture de l'Ain",
                 "Formateurs en activité",
             ],
-        )
-        + callout(
-            title="Stage cynotechnicien &amp; assistant cynotechnicien",
-            text="Du 28 septembre au 2 octobre. Venez vous renseigner.",
+            note=memo_note(
+                title="Stage cynotechnicien &amp; assistant cynotechnicien",
+                text="Du 28 septembre au 2 octobre. Venez vous renseigner.",
+                cta_label="Nous contacter",
+                cta_url="/contact/",
+            ),
         )
         + section(
             cls="section--tight section--stats",

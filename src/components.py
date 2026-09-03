@@ -18,7 +18,7 @@ def picture(name, alt, *, cls="", width=None, height=None, lazy=True, sizes=None
     )
 
 
-def hero(*, eyebrow, title, lead, image, image_alt, primary, secondary=None, badges=None):
+def hero(*, eyebrow, title, lead, image, image_alt, primary, secondary=None, badges=None, note=None):
     """Hero d'accueil : texte à gauche, photo à droite."""
     btns = f'<a class="btn btn--primary" href="{primary[1]}">{e(primary[0])}</a>'
     if secondary:
@@ -38,9 +38,23 @@ def hero(*, eyebrow, title, lead, image, image_alt, primary, secondary=None, bad
     </div>
     <div class="hero__media">
       {picture(image, image_alt, cls="hero__pic", lazy=False, width=1000, height=563)}
+      {note or ""}
     </div>
   </div>
 </section>"""
+
+
+def memo_note(*, title, text, cta_label=None, cta_url=None):
+    """Pense-bête épinglé sur la photo du hero, pour une annonce ponctuelle."""
+    cta = (
+        f'<a class="memo-note__cta" href="{cta_url}">{e(cta_label)}</a>'
+        if cta_label else ""
+    )
+    return f"""<div class="memo-note">
+        <p class="memo-note__title">{title}</p>
+        <p class="memo-note__text">{text}</p>
+        {cta}
+      </div>"""
 
 
 def page_header(*, eyebrow, title, lead, image=None, image_alt=""):
