@@ -71,4 +71,12 @@ GALERIE = [
         "src": "ib_p028_1_38.png",
         "alt": "Écusson Unité Cynophile d'un cynotechnicien de Police Municipale",
     },
+    # --- Photos récentes ajoutées en fin de liste (la numérotation des images
+    #     de la galerie suit l'ordre de cette liste : ne pas insérer au milieu) ---
+    {
+        "src": "stand_tir_1.jpg",
+        "recent": True,
+        "crop": (0, 0.348, 1, 1),
+        "alt": "Deux hommes en tenue d'intervention et casques antibruit posant dans un stand de tir, l'un tenant une carabine",
+    },
 ]
