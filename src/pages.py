@@ -128,12 +128,6 @@ page(
                 "Habilité DDPP & Préfecture de l'Ain",
                 "Formateurs en activité",
             ],
-            note=memo_note(
-                title="Stage cynotechnicien &amp; assistant cynotechnicien",
-                text="Du 28 septembre au 2 octobre. Venez vous renseigner.",
-                cta_label="Nous contacter",
-                cta_url="/contact/",
-            ),
         )
         + section(
             cls="section--tight section--stats",
