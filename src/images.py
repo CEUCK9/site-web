@@ -9,7 +9,7 @@ et de relancer ce script.
 import os
 import sys
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.environ.get("CEUC_SRC", "")
@@ -181,12 +181,24 @@ def main():
         if not os.path.exists(p):
             print(f"  MANQUANT galerie {src}")
             continue
-        im = Image.open(p).convert("RGB")
+        # Les photos de téléphone portent parfois une consigne de rotation :
+        # on l'applique, sinon la photo s'afficherait couchée.
+        im = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+        # Zones à pixelliser (plaque d'immatriculation, etc.), en fractions.
+        for l, t, r, b in item.get("flou", []):
+            box_px = (round(l * im.width), round(t * im.height),
+                      round(r * im.width), round(b * im.height))
+            zone = im.crop(box_px)
+            petit = zone.resize((max(1, zone.width // 14), max(1, zone.height // 14)), Image.BOX)
+            im.paste(petit.resize(zone.size, Image.NEAREST), box_px[:2])
         box = item.get("crop")
         if box:
             l, t, r, b = box
             im = im.crop((round(l * im.width), round(t * im.height),
                           round(r * im.width), round(b * im.height)))
+        # photos de téléphone très lourdes : on ramène à 1600 px pour garder un site rapide
+        if max(im.size) > 2000:
+            im.thumbnail((1600, 1600), Image.LANCZOS)
         # vignette carrée pour la grille
         thumb = crop_to_ratio(im, (1, 1))
         if thumb.width > 600:

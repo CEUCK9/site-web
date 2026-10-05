@@ -12,6 +12,8 @@ Clés :
           absent → visuel récupéré sur l'ancien site
   crop    (gauche, haut, droite, bas) en fractions, pour écarter du cadre des
           personnes identifiables restées non floutées sur les photos d'origine
+  flou    liste de zones (gauche, haut, droite, bas) en fractions à pixelliser
+          (plaque d'immatriculation, par exemple)
 """
 
 GALERIE = [
@@ -78,5 +80,21 @@ GALERIE = [
         "recent": True,
         "crop": (0, 0.348, 1, 1),
         "alt": "Deux hommes en tenue d'intervention et casques antibruit posant dans un stand de tir, l'un tenant une carabine",
+    },
+    {
+        "src": "ecusson_ceuc_1.jpg",
+        "recent": True,
+        "alt": "Écusson du CEUC de Meximieux cousu sur la manche d'un agent en tenue d'intervention",
+    },
+    {
+        "src": "chien_police_municipale_1.jpg",
+        "recent": True,
+        "alt": "Agent de Police Municipale tenant en laisse son chien muselé et équipé d'un harnais",
+    },
+    {
+        "src": "attestation_ceuc_1.jpg",
+        "recent": True,
+        "flou": [(0.165, 0.41, 0.235, 0.46)],
+        "alt": "Deux agents de Police Municipale en tenue d'intervention posant avec une troisième personne devant un véhicule, l'un tenant une attestation du CEUC",
     },
 ]
