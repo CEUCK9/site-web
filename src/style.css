@@ -328,6 +328,18 @@ a:hover { color: var(--brand-600); }
 }
 .memo-note__title { margin: 0 0 .35em; font-weight: 800; color: #2c2200; }
 .memo-note__text { margin: 0; }
+.memo-note__pic { display: block; margin: 0 0 .7rem; }
+.memo-note__pic img {
+  display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
+  border: 4px solid #fff; border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+}
+/* Avec photo, le pense-bête est trop haut pour tenir sur l'image : il pend
+   sous son coin droit au lieu de la recouvrir. */
+.memo-note--photo {
+  position: relative; top: auto; right: auto;
+  max-width: 215px; padding: 1rem .9rem .9rem; margin: -30px 6% 0 auto;
+}
 .memo-note__cta {
   display: inline-block; margin-top: .6rem; font-weight: 700; font-size: .8rem;
   color: #55692a; text-decoration: underline;

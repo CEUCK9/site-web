@@ -44,13 +44,23 @@ def hero(*, eyebrow, title, lead, image, image_alt, primary, secondary=None, bad
 </section>"""
 
 
-def memo_note(*, title, text, cta_label=None, cta_url=None):
-    """Pense-bête épinglé sur la photo du hero, pour une annonce ponctuelle."""
+def memo_note(*, title, text, cta_label=None, cta_url=None, image=None, image_alt=""):
+    """Pense-bête épinglé sur la photo du hero, pour une annonce ponctuelle.
+
+    `image` (facultatif) : nom d'un visuel de assets/img sans extension, affiché
+    en photo collée sur le pense-bête. Prévoir un visuel carré.
+    """
     cta = (
         f'<a class="memo-note__cta" href="{cta_url}">{e(cta_label)}</a>'
         if cta_label else ""
     )
-    return f"""<div class="memo-note">
+    photo = (
+        picture(image, image_alt, cls="memo-note__pic", lazy=False, width=600, height=600)
+        if image else ""
+    )
+    cls = "memo-note memo-note--photo" if image else "memo-note"
+    return f"""<div class="{cls}">
+        {photo}
         <p class="memo-note__title">{title}</p>
         <p class="memo-note__text">{text}</p>
         {cta}

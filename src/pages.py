@@ -128,6 +128,20 @@ page(
                 "Habilité DDPP & Préfecture de l'Ain",
                 "Formateurs en activité",
             ],
+            # Annonce ponctuelle : à retirer (supprimer le bloc note=...) quand
+            # elle n'est plus d'actualité. La photo est celle de la galerie.
+            note=memo_note(
+                title="Bienvenue à Guillaume",
+                text=(
+                    "Nouveau formateur au CEUC, Moniteur en Maniement des Armes "
+                    "depuis 2020."
+                ),
+                image="galerie-13-thumb",
+                image_alt=(
+                    "Deux hommes en tenue d'intervention et casques antibruit "
+                    "posant dans un stand de tir, l'un tenant une carabine"
+                ),
+            ),
         )
         + section(
             cls="section--tight section--stats",
