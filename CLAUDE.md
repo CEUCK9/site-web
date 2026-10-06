@@ -93,7 +93,8 @@ texte.
    thème, ou dans une carte existante.
 
 Pour l'ajouter à la galerie, déclare-le plutôt dans `src/gallery_data.py` avec
-`"recent": True`.
+`"recent": True`, **toujours en fin de liste**. La galerie affiche d'elle-même
+la dernière photo ajoutée en premier : il n'y a pas d'ordre à régler.
 
 **Toute photo doit avoir une légende descriptive.** Elle sert de texte
 alternatif : c'est ce que lisent Google et les personnes malvoyantes. Décris

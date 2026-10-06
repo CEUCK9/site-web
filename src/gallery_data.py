@@ -73,8 +73,10 @@ GALERIE = [
         "src": "ib_p028_1_38.png",
         "alt": "Écusson Unité Cynophile d'un cynotechnicien de Police Municipale",
     },
-    # --- Photos récentes ajoutées en fin de liste (la numérotation des images
-    #     de la galerie suit l'ordre de cette liste : ne pas insérer au milieu) ---
+    # --- Photos ajoutées depuis : TOUJOURS en fin de liste (la numérotation
+    #     des images suit l'ordre de cette liste : ne pas insérer au milieu).
+    #     À l'affichage, la dernière ajoutée apparaît en tête de la galerie,
+    #     voir ordre_affichage() en bas de ce fichier. ---
     {
         "src": "stand_tir_1.jpg",
         "recent": True,
@@ -98,3 +100,17 @@ GALERIE = [
         "alt": "Deux agents de Police Municipale en tenue d'intervention posant avec une troisième personne devant un véhicule, l'un tenant une attestation du CEUC",
     },
 ]
+
+# Nombre de photos de la galerie d'origine (les 12 premières de la liste).
+SOCLE = 12
+
+
+def ordre_affichage():
+    """(numéro, photo) dans l'ordre montré aux visiteurs.
+
+    Les photos ajoutées après la galerie d'origine passent devant, la plus
+    récente en premier ; la galerie d'origine suit, dans son ordre habituel.
+    Le numéro reste celui de la liste : c'est lui qui nomme les fichiers.
+    """
+    numerotees = list(enumerate(GALERIE, 1))
+    return numerotees[SOCLE:][::-1] + numerotees[:SOCLE]

@@ -1339,7 +1339,7 @@ page(
 # GALERIE
 # ==========================================================================
 
-from gallery_data import GALERIE as _GAL  # légendes partagées avec le pipeline images
+from gallery_data import ordre_affichage as _gal_ordre  # légendes partagées avec le pipeline images
 
 page(
     slug="galerie/",
@@ -1361,7 +1361,7 @@ page(
             ),
         )
         + section(
-            content=gallery([(i, item["alt"]) for i, item in enumerate(_GAL, 1)], captions=False)
+            content=gallery([(i, item["alt"]) for i, item in _gal_ordre()], captions=False)
         )
         + callout(
             title="Toute notre actualité sur les réseaux",
